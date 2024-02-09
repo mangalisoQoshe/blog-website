@@ -1,0 +1,11 @@
+.nav {
+  padding-block: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  color: black;
+  font-size: 1.5rem;
+}

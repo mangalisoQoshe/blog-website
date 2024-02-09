@@ -1,0 +1,16 @@
+.home {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.1fr;
+}
+
+.profile-pic {
+  width: 200px;
+  height: 200px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
