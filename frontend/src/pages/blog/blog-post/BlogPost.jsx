@@ -1,9 +1,17 @@
+import styles from "./BlogPost.module.css";
+import { Link } from "react-router-dom";
 
-
-function BlogPost({blog}) {
+function BlogPost({ blog }) {
   return (
-    <div>{blog}</div>
-  )
+    <Link  to="/blog/24432">
+      <div className={styles["blog-post"]}>
+        <p>{blog.date}</p>
+        <title>{blog.title}</title>
+        <p>{blog.post}</p>
+        <span>{blog.topic}</span>
+      </div>
+    </Link>
+  );
 }
 
-export default BlogPost
+export default BlogPost;
