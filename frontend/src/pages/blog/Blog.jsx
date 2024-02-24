@@ -1,17 +1,19 @@
 import { useState,useEffect } from "react";
 import styles from "./Blog.module.css"
-import axios from "axios"
+import blogService from "../../services/blog-service/Blog";
 
 
-import BlogPost from "./blog-post/BlogPost";
+import Post from "../../components/post/Post";
 
 function Blog() {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(()=>{
-    axios.get("/api/posts")
-    .then((response)=>setBlogs(response.data))
-  })
+   blogService
+   .getAll()
+   .then(blogList=>setBlogs(blogList))
+   .catch((err)=>{console.log("Server offline",err)})
+  },[])
   return (
     <div>
       <h1>Welcome</h1>
@@ -25,7 +27,8 @@ function Blog() {
       </form>
       <div className={styles.blogs}>
         {blogs.map((blog) => {
-         return <BlogPost key={blog.id} blog={blog} />;
+         
+         return <Post key={blog.id} blog={blog} />;
         })}
       </div>
     </div>

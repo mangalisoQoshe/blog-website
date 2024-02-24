@@ -1,7 +1,8 @@
-import styles from "./BlogPost.module.css";
+import styles from "./Post.module.css";
 import { Link } from "react-router-dom";
 
-function BlogPost({ blog }) {
+function Post({ blog }) {
+
   return (
     <Link  to={"/blog/"+blog.id}>
       <div className={styles["blog-post"]}>
@@ -14,4 +15,4 @@ function BlogPost({ blog }) {
   );
 }
 
-export default BlogPost;
+export default Post;

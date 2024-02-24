@@ -62,8 +62,8 @@ func main() {
 	}
 
 	// Define HTTP routes
-	http.HandleFunc("/posts", listPostsHandler)
-	http.HandleFunc("/posts/", getPostHandler)
+	http.HandleFunc("/blogs", listPostsHandler)
+	http.HandleFunc("/blogs/", getPostHandler)
 
 	// Start the server
 	fmt.Println("Server listening on port 8080...")
@@ -79,7 +79,7 @@ func listPostsHandler(w http.ResponseWriter, r *http.Request) {
 
 func getPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Extract post ID from URL path
-	idStr := r.URL.Path[len("/posts/"):]
+	idStr := r.URL.Path[len("/blogs/"):]
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid post ID", http.StatusBadRequest)
