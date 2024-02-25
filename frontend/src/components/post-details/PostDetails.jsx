@@ -26,10 +26,10 @@ function PostDetails() {
       <button onClick={handleBackBtn}>Back</button>
       {post ? (
         <div>
-          <h2>{post.date}</h2>
+          <h2>{post.PublishDate}</h2>
           <h2>{post.title}</h2>
           <p>{post.body}</p>
-          <p>{post.topic}</p>
+          <p>{post.tag}</p>
         </div>
       ) : (
         <div>Loading...</div>

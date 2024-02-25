@@ -1,7 +1,7 @@
 import {
   InstagramIcon,
   LinkedinIcon,
-} from "../../components/shared/icons/Icons";
+} from "../../components/icons/Icons";
 import styles from "./Home.module.css";
 
 function Home() {

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 //component imports
 
 import { MoonIcon } from "../icons/Icons";
-import ActiveLink from "../../active-link/ActiveLink";
+import ActiveLink from "../active-link/ActiveLink";
 
 function Nav() {
   return (
@@ -15,6 +15,9 @@ function Nav() {
 
       <ActiveLink to="/">Home</ActiveLink>
       <ActiveLink to="/blog">Blog</ActiveLink>
+      <NavLink to="/create-post" className={styles.link}>
+        Create Post
+      </NavLink>
 
       <button>
         <MoonIcon />

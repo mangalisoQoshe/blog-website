@@ -6,12 +6,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from './pages/home/Home'
 import Blog from './pages/blog/Blog';
-import NotFound from "./pages/notFound/NotFound";
+import NotFound from "./pages/not-found/NotFound";
 
 // components import
-import Nav from "./components/shared/nav/Nav";
+import Nav from "./components/nav/Nav";
 import PostDetails from './components/post-details/PostDetails';
 import Login from './pages/login/Login';
+import CreatePost from './pages/create-post/CreatePost';
 
 
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login/>}/>
           <Route path="/blog" element={<Blog />} />
+          <Route path="/create-post" element={<CreatePost/>}/>
           <Route path="/blog/:id" element={<PostDetails />} />
           <Route path="*" element={<NotFound/>}/>
         </Routes>

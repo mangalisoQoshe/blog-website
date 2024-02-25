@@ -1,0 +1,17 @@
+.label {
+  display: block;
+  height: 40px;
+  width: 80%;
+  margin-inline: auto;
+  margin-block: 1rem;
+  padding-left: 1rem;
+}
+
+.txt-area {
+  height: 80px;
+  width: 80%;
+  display: block;
+  margin-inline: auto;
+  margin-block: 1rem;
+  padding-left: 1rem;
+}
