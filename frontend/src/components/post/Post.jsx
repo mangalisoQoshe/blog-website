@@ -11,13 +11,7 @@ function Post({ blog }) {
           <span>{blog.tag}</span>
           <p>{blog.brief}</p>
         </div>
-        <div>
-          <img
-            className={styles["blog-img"]}
-            src="public/sam1.jpg"
-            alt="Blog Image"
-          />
-        </div>
+  
     
     </Link>
   );

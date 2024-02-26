@@ -1,17 +1,28 @@
+.container{
+  display: grid;
+  grid-template-columns: 0.8fr 0.3fr;
+  
+}
+
+.btn-tag{
+display: inline;
+  
+}
+
 .label {
-  display: block;
   height: 40px;
-  width: 80%;
-  margin-inline: auto;
+  width: 90%;
+
   margin-block: 1rem;
   padding-left: 1rem;
 }
 
 .txt-area {
   height: 80px;
-  width: 80%;
-  display: block;
-  margin-inline: auto;
+  width: 90%;
+  
+
   margin-block: 1rem;
   padding-left: 1rem;
+  padding-top: 0.1rem;
 }
