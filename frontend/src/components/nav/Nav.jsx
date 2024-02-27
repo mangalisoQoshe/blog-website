@@ -9,7 +9,7 @@ import ActiveLink from "../active-link/ActiveLink";
 function Nav() {
   return (
     <div className={styles.nav}>
-      <NavLink to="/login" activeClassName="active" className={styles.link}>
+      <NavLink to="/login"  className={styles.link}>
         S. Mathangana
       </NavLink>
 

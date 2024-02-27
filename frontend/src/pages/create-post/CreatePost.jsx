@@ -1,9 +1,12 @@
+import EditorComponent from "../../components/txt-editor/EditorComponent";
 import styles from "./CreatePost.module.css";
-import { Editor } from "@tinymce/tinymce-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function CreatePost() {
-  const [input, setInput] = useState({ title: "", brief: "", content: "" });
+function CreatePost({ initialInput, addBlog }) {
+  const [input, setInput] = useState({ initialInput });
+  const [tagList, setTagList] = useState([]);
+  const navigate = useNavigate()
 
   const handleChangeInput = (e) => {
     switch (e.target.name) {
@@ -13,6 +16,10 @@ function CreatePost() {
 
       case "brief":
         setInput({ ...input, brief: e.target.value });
+        break;
+
+      case "tag":
+        setInput({ ...input, tag: e.target.value });
         break;
 
       default:
@@ -25,13 +32,37 @@ function CreatePost() {
     setInput({ ...input, content: value });
   };
 
-  const handleSubmitBtn = (e) => {
+  const handleFormSubmitBtn = (e) => {
     e.preventDefault();
+    //will finish later
+    //generate id
+    const id = Math.ceil(Math.random() * 1000);
+   
+    addBlog({
+      id: id,
+      tag: input.tag,
+      brief: input.brief,
+      title: input.title,
+      body: input.body,
+      publishDate: new Date().toDateString(),
+    });
+    navigate('/blog')
   };
+
+  const handleAddTagBtn = (e) => {
+    e.preventDefault();
+    setTagList([...tagList, input.tag]);
+    setInput({ ...input, tag: "" });
+  };
+
+  const deleteTag = (id) => {
+    setTagList((prevState) => prevState.filter((t) => t != id));
+  };
+
   return (
-    <form onSubmit={handleSubmitBtn}>
+    <form onSubmit={handleFormSubmitBtn}>
       <div className={styles.container}>
-        <div className={styles["input-container"]}>
+        <div>
           <input
             placeholder="Title"
             type="text"
@@ -54,50 +85,37 @@ function CreatePost() {
             className={styles["txt-area"]}
           />
         </div>
-        <div className={styles["add-tag"]}>
-          <label htmlFor="#tag" style={{"display":"block"}}>Add Tag</label>
-          <input type="text"/>
-          <button className={styles["btn-tag"]}>add</button>
-          <ul></ul>
+        <div>
+          <input
+            type="text"
+            className={styles["input-tag"]}
+            placeholder="  Add Tag"
+            value={input.tag}
+            name="tag"
+            onChange={handleChangeInput}
+          />
+          <button className={styles["btn-tag"]} onClick={handleAddTagBtn}>
+            add
+          </button>
+          <ul>
+            {tagList.map((tag) => (
+              <li key={tag}>
+                {tag}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteTag(tag);
+                  }}
+                >
+                  delete
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <div>
-        <Editor
-          apiKey="rfvabu9tkel58kg3a1obhmpzlfitavaxdbjw5dlmo3u28cpz"
-          initialValue={input.content}
-          menu={true}
-          onEditorChange={(newValue) => handleEditor(newValue)}
-          init={{
-            height: 300,
-            plugins: [
-              "advlist",
-              "autolink",
-              "lists",
-              "link",
-              "image",
-              "charmap",
-              "preview",
-              "anchor",
-              "searchreplace",
-              "visualblocks",
-              "code",
-              "fullscreen",
-              "insertdatetime",
-              "media",
-              "table",
-              "code",
-              "help",
-              "wordcount",
-            ],
-            toolbar:
-              "undo redo | blocks | " +
-              "bold italic forecolor | alignleft aligncenter " +
-              "alignright alignjustify | bullist numlist outdent indent | " +
-              "removeformat | help",
-            content_style:
-              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-          }}
-        />
+        <EditorComponent input={input} handleEditor={handleEditor} />
       </div>
       <button type="submit">Post</button>
     </form>
