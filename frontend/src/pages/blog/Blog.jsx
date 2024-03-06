@@ -1,16 +1,9 @@
-import { useState,useEffect } from "react";
-import styles from "./Blog.module.css"
-
-
+import { useState, useEffect } from "react";
+import styles from "./Blog.module.css";
 
 import Post from "../../components/post/Post";
-import EditorComponent from "../../components/txt-editor/EditorComponent";
 
-function Blog({ blogs, deletePost }) {
-  const [edit, setEdit] = useState({ isEdit: false, blogToEdit: "" });
-
-
-
+function Blog({ blogs, deletePost, editBlog }) {
   return (
     <div>
       <div>
@@ -25,7 +18,14 @@ function Blog({ blogs, deletePost }) {
         </form>
         <div className={styles.blogs}>
           {blogs.map((blog) => {
-            return <Post key={blog.id} blog={blog} deletePost={deletePost} />;
+            return (
+              <Post
+                key={blog.id}
+                blog={blog}
+                deletePost={deletePost}
+                editBlog={editBlog}
+              />
+            );
           })}
         </div>
       </div>

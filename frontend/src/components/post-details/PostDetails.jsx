@@ -29,7 +29,7 @@ function PostDetails() {
           <h2>{post.PublishDate}</h2>
           <h2>{post.title}</h2>
           <p>{post.body}</p>
-          <p>{post.tag}</p>
+          <p>{(post.tags).map((tag)=>{return tag})}</p>
         </div>
       ) : (
         <div>Loading...</div>

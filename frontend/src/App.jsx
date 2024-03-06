@@ -17,6 +17,12 @@ import CreatePost from "./pages/create-post/CreatePost";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
+  const [editedBlog, setEditedBlog] = useState({
+    title: "",
+    brief: "",
+    content: "",
+    tags: [],
+  });
 
   useEffect(() => {
     blogService
@@ -27,33 +33,45 @@ function App() {
       });
   }, []);
 
+
+
   const deletePost = (id) => {
     setBlogs((prevState) => prevState.filter((t) => t.id != id));
   };
 
-  const addBlog=(blog)=>{
-     setBlogs((prevState) => [...prevState, blog]);
-  }
+  const addBlog = (blog) => {
+    setBlogs((prevState) => [...prevState, blog]);
+  };
+
+  const editBlog = (blog) => {
+    setEditedBlog(blog);
+  };
+
+  const resetEditedBlog = () => {
+    setEditedBlog({
+      title: "",
+      brief: "",
+      content: "",
+      tags: [],
+    });
+  };
 
   return (
     <div className="container">
       <Router>
-        <Nav />
+        <Nav resetEditedBlog={resetEditedBlog} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/blog"
-            element={<Blog blogs={blogs} deletePost={deletePost} />}
+            element={
+              <Blog blogs={blogs} deletePost={deletePost} editBlog={editBlog} />
+            }
           />
           <Route
             path="/create-post"
-            element={
-              <CreatePost
-                initialInput={{ title: "", brief: "", content: "", tag: "" }}
-                addBlog={addBlog}
-              />
-            }
+            element={<CreatePost editedBlog={editedBlog} addBlog={addBlog} />}
           />
           <Route path="/blog/:id" element={<PostDetails />} />
           <Route path="*" element={<NotFound />} />

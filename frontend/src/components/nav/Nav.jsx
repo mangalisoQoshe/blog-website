@@ -6,18 +6,23 @@ import { NavLink } from "react-router-dom";
 import { MoonIcon } from "../icons/Icons";
 import ActiveLink from "../active-link/ActiveLink";
 
-function Nav() {
+function Nav({ resetEditedBlog }) {
+  const handleClick = () => {
+    resetEditedBlog()
+  };
   return (
     <div className={styles.nav}>
-      <NavLink to="/login"  className={styles.link}>
+      <NavLink to="/login" className={styles.link}>
         S. Mathangana
       </NavLink>
 
       <ActiveLink to="/">Home</ActiveLink>
       <ActiveLink to="/blog">Blog</ActiveLink>
-      <NavLink to="/create-post" className={styles.link}>
-        Create Post
-      </NavLink>
+      <div onClick={() => handleClick()}>
+        <NavLink to="/create-post" className={styles.link}>
+          Create Post
+        </NavLink>
+      </div>
 
       <button>
         <MoonIcon />

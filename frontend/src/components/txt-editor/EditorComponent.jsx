@@ -1,10 +1,11 @@
 import { Editor } from "@tinymce/tinymce-react";
 
 function EditorComponent({ input, handleEditor }) {
+ 
   return (
     <Editor
       apiKey="rfvabu9tkel58kg3a1obhmpzlfitavaxdbjw5dlmo3u28cpz"
-      initialValue={input.content}
+      value={input.body}
       menu={true}
       onEditorChange={(newValue) => handleEditor(newValue)}
       init={{

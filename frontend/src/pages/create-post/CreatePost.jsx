@@ -3,10 +3,12 @@ import styles from "./CreatePost.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function CreatePost({ initialInput, addBlog }) {
-  const [input, setInput] = useState({ initialInput });
-  const [tagList, setTagList] = useState([]);
-  const navigate = useNavigate()
+function CreatePost({ editedBlog, addBlog }) {
+  const [input, setInput] = useState({ ...editedBlog });
+  const [tagList, setTagList] = useState([...editedBlog.tags]);
+  const navigate = useNavigate();
+
+ 
 
   const handleChangeInput = (e) => {
     switch (e.target.name) {
@@ -23,13 +25,13 @@ function CreatePost({ initialInput, addBlog }) {
         break;
 
       default:
-        console.log("Error occured in CreapePost component");
+        console.log("Error occured in CreapePost component: unknown case");
         break;
     }
   };
 
   const handleEditor = (value) => {
-    setInput({ ...input, content: value });
+    setInput({ ...input, body: value });
   };
 
   const handleFormSubmitBtn = (e) => {
@@ -37,16 +39,16 @@ function CreatePost({ initialInput, addBlog }) {
     //will finish later
     //generate id
     const id = Math.ceil(Math.random() * 1000);
-   
+
     addBlog({
       id: id,
-      tag: input.tag,
+      tags: [...tagList],
       brief: input.brief,
       title: input.title,
       body: input.body,
       publishDate: new Date().toDateString(),
     });
-    navigate('/blog')
+    navigate("/blog");
   };
 
   const handleAddTagBtn = (e) => {
