@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { auth } from "../../services/firebase/config";
-import {signInWithEmailAndPassword,signOut} from  "firebase/auth"
+
+import useAuth from "../../context/authContext/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -8,45 +9,54 @@ const Login = () => {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
 
+  const { login, logout, user } = useAuth();
 
-  const handleLogin = (e) => {
+  const {state} = useLocation()
+
+  const navigate = useNavigate()
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (input.username !== "" && input.password !== "") {
-      signInWithEmailAndPassword(auth,input.email,input.password)
-      .then((userCredentail)=>{
-        const user = userCredentail.user
-        console.log(user)
-      })
-      .catch((err)=>{
-        console.log(err.message)
-      })
+    if (input.email == "" && input.password == "") {
+      alert("Please provide a valid input!");
       return;
     }
-    alert("please provide a valid input");
+
+    try {
+      setLoading(true);
+      await login(input.email, input.password);
+      console.log("Logged in successfully");
+      navigate(state.path || "/blog")
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   const handleInput = (e) => {
-  
     const { name, value } = e.target;
     setInput((prev) => ({
       ...prev,
       [name]: value,
     }));
-   
   };
 
-  const handleSignOut=()=>{
-    signOut(auth)
-    .then(()=>{
-      console.log("signed out successfully")
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-  }
+  const handleSignOut = async() => {
 
-  return (
+    try {
+      await logout()
+       console.log("signed out successfully");
+       navigate("/")
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return user ? (
+    <button onClick={handleSignOut}>Sign Out</button>
+  ) : (
     <form onSubmit={handleLogin}>
       <div className="form_control">
         <label htmlFor="user-email">Email:</label>
@@ -59,7 +69,6 @@ const Login = () => {
           required
           onChange={handleInput}
         />
-    
       </div>
       <div className="form_control">
         <label htmlFor="password">Password:</label>
@@ -72,9 +81,10 @@ const Login = () => {
           aria-invalid="false"
           onChange={handleInput}
         />
-     
       </div>
-      <button className="btn-submit">Login</button>
+      <button disabled={loading} className="btn-submit">
+        Login
+      </button>
     </form>
   );
 };

@@ -14,6 +14,8 @@ import Nav from "./components/nav/Nav";
 import PostDetails from "./components/post-details/PostDetails";
 import Login from "./pages/login/Login";
 import CreatePost from "./pages/create-post/CreatePost";
+import AuthProvider from "./context/authContext/AuthProvider";
+import RequireAuth from "./components/require-auth/RequireAuth";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
@@ -32,8 +34,6 @@ function App() {
         console.log("Server offline", err);
       });
   }, []);
-
-
 
   const deletePost = (id) => {
     setBlogs((prevState) => prevState.filter((t) => t.id != id));
@@ -58,25 +58,35 @@ function App() {
 
   return (
     <div className="container">
-      <Router>
-        <Nav resetEditedBlog={resetEditedBlog} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/blog"
-            element={
-              <Blog blogs={blogs} deletePost={deletePost} editBlog={editBlog} />
-            }
-          />
-          <Route
-            path="/create-post"
-            element={<CreatePost editedBlog={editedBlog} addBlog={addBlog} />}
-          />
-          <Route path="/blog/:id" element={<PostDetails />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Nav resetEditedBlog={resetEditedBlog} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/blog"
+              element={
+                <Blog
+                  blogs={blogs}
+                  deletePost={deletePost}
+                  editBlog={editBlog}
+                />
+              }
+            />
+            <Route
+              path="/create-post"
+              element={
+                <RequireAuth>
+                  <CreatePost editedBlog={editedBlog} addBlog={addBlog} />
+                </RequireAuth>
+              }
+            />
+            <Route path="/blog/:id" element={<PostDetails />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </div>
   );
 }

@@ -5,10 +5,12 @@ import { NavLink } from "react-router-dom";
 
 import { MoonIcon } from "../icons/Icons";
 import ActiveLink from "../active-link/ActiveLink";
+import useAuth from "../../context/authContext/useAuth";
 
 function Nav({ resetEditedBlog }) {
+  const { user } = useAuth();
   const handleClick = () => {
-    resetEditedBlog()
+    resetEditedBlog();
   };
   return (
     <div className={styles.nav}>
@@ -18,11 +20,15 @@ function Nav({ resetEditedBlog }) {
 
       <ActiveLink to="/">Home</ActiveLink>
       <ActiveLink to="/blog">Blog</ActiveLink>
-      <div onClick={() => handleClick()}>
-        <NavLink to="/create-post" className={styles.link}>
-          Create Post
-        </NavLink>
-      </div>
+      {user ? (
+        <div onClick={() => handleClick()}>
+          <NavLink to="/create-post" className={styles.link}>
+            Create Post
+          </NavLink>
+        </div>
+      ) : (
+        null
+      )}
 
       <button>
         <MoonIcon />
