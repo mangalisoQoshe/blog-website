@@ -118,6 +118,9 @@ function CreatePost({ editedBlog, addBlog }) {
       </div>
       <div>
         <EditorComponent input={input} handleEditor={handleEditor} />
+        {console.log(
+          <EditorComponent input={input} handleEditor={handleEditor} />
+        )}
       </div>
       <button type="submit">Post</button>
     </form>

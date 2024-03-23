@@ -1,6 +1,7 @@
 import { useParams,useNavigate } from "react-router-dom";
 import blogService from "../../services/blog-service/Blog";
 import { useEffect, useState } from "react";
+import Spinner from "../spinner/Spinner";
 
 function PostDetails() {
   const [post, setPost] = useState(null);
@@ -32,7 +33,7 @@ function PostDetails() {
           <p>{(post.tags).map((tag)=>{return tag})}</p>
         </div>
       ) : (
-        <div>Loading...</div>
+        <Spinner/>
       )}
     </>
   );

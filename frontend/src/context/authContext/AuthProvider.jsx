@@ -9,10 +9,14 @@ import {
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const unsubstribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      if (isLoading) {
+        setIsLoading(false);
+      }
     });
 
     return unsubstribe;
@@ -26,7 +30,7 @@ function AuthProvider({ children }) {
     return signOut(auth);
   };
 
-  const value = { user, login, logout };
+  const value = { user, login, logout, isLoading };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

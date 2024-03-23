@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import useAuth from "../../context/authContext/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import Spinner from "../../components/spinner/Spinner";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -11,11 +12,11 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { login, logout, user } = useAuth();
+  const { login, logout, user,isLoading } = useAuth();
 
-  const {state} = useLocation()
+  const { state } = useLocation();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ const Login = () => {
       setLoading(true);
       await login(input.email, input.password);
       console.log("Logged in successfully");
-      navigate(state.path || "/blog")
+      navigate((state && state.path) || "/blog");
     } catch (error) {
       console.log(error);
     }
@@ -43,18 +44,19 @@ const Login = () => {
     }));
   };
 
-  const handleSignOut = async() => {
-
+  const handleSignOut = async () => {
     try {
-      await logout()
-       console.log("signed out successfully");
-       navigate("/")
+      await logout();
+      console.log("signed out successfully");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 
-  return user ? (
+  return isLoading ? (
+    <Spinner />
+  ) : user ? (
     <button onClick={handleSignOut}>Sign Out</button>
   ) : (
     <form onSubmit={handleLogin}>
