@@ -16,7 +16,7 @@ const getAll = async () => {
   }
 };
 
-const getOne = async (id) => {
+const getOne = async(id) => {
   try {
     const response = await fetch(`${endpoint}/${id}`);
     const data = await response.json();
@@ -30,7 +30,7 @@ const getOne = async (id) => {
   }
 };
 
-const create = async (newObject) => {
+const create = async(newObject) => {
   try {
     const response = await fetch(endpoint, {
       method: "post",
