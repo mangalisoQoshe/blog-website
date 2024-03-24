@@ -1,35 +1,85 @@
-import axios from "axios";
 
-const baseURL = "/api/blogs";
 
-const getAll=async ()=>{
-    const request = axios.get(baseURL)
-    const response = await request;
-    return response.data;
-}
+const endpoint = "/api/blogs";
 
-const getOne= async (id)=>{
-    const request =  axios.get(`${baseURL}/${id}`)
-    const response = await request
-    return response.data
-}
+const getAll = async () => {
+  try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error("Server Error ", data.error.message);
+    }
+  } catch (err) {
+    throw new Error("Fetch Error: " + err);
+  }
+};
+
+const getOne = async (id) => {
+  try {
+    const response = await fetch(`${endpoint}/${id}`);
+    const data = await response.json();
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error("Server Error ", data.error.message);
+    }
+  } catch (err) {
+    throw new Error("Fetch Error: " + err);
+  }
+};
 
 const create = async (newObject) => {
-  const request = axios.post(baseURL, newObject);
-  const response = await request;
-    return response.data;
+  try {
+    const response = await fetch(endpoint, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newObject),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error("Server Error ", data.error.message);
+    }
+  } catch (err) {
+    throw new Error("Fetch Error: " + err);
+  }
 };
 
 const update = async (id, newObject) => {
-  const request = axios.put(`${baseURL}/${id}`, newObject);
-  const response = await request;
-    return response.data;
+  try {
+    const response = await fetch(`endpoint/${id}`, {
+      method: "put",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newObject),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error("Server Error ", data.error.message);
+    }
+  } catch (err) {
+    throw new Error("Fetch Error: " + err);
+  }
 };
 
 const deleteBlog = async (id) => {
-  const request = axios.delete(`${baseURL}/${id}`);
-  const response = await request;
-    return response.data;
+  try {
+    const response = await fetch(`endpoint/${id}`, {
+      method: "delete",
+    });
+    const data = await response.json();
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error("Server Error ", data.error.message);
+    }
+  } catch (err) {
+    throw new Error("Fetch Error: " + err);
+  }
 };
 
 export default {

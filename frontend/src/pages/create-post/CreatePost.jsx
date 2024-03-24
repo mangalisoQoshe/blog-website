@@ -25,7 +25,7 @@ function CreatePost({ editedBlog, addBlog }) {
         break;
 
       default:
-        console.log("Error occured in CreapePost component: unknown case");
+        console.log("Error occured in CreatePost component: unknown case");
         break;
     }
   };
@@ -40,6 +40,7 @@ function CreatePost({ editedBlog, addBlog }) {
     //generate id
     const id = Math.ceil(Math.random() * 1000);
 
+
     addBlog({
       id: id,
       tags: [...tagList],
@@ -48,7 +49,8 @@ function CreatePost({ editedBlog, addBlog }) {
       body: input.body,
       publishDate: new Date().toDateString(),
     });
-    navigate("/blog");
+
+    navigate(`/blog/${input.id}`)
   };
 
   const handleAddTagBtn = (e) => {
@@ -118,9 +120,7 @@ function CreatePost({ editedBlog, addBlog }) {
       </div>
       <div>
         <EditorComponent input={input} handleEditor={handleEditor} />
-        {console.log(
-          <EditorComponent input={input} handleEditor={handleEditor} />
-        )}
+       
       </div>
       <button type="submit">Post</button>
     </form>

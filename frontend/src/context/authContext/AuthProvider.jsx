@@ -8,12 +8,12 @@ import {
 } from "firebase/auth";
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const unsubstribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+      setCurrentUser(user);
       if (isLoading) {
         setIsLoading(false);
       }
@@ -30,7 +30,7 @@ function AuthProvider({ children }) {
     return signOut(auth);
   };
 
-  const value = { user, login, logout, isLoading };
+  const value = { currentUser, login, logout, isLoading };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

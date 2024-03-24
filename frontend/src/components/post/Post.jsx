@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Post({ blog, deletePost, editBlog }) {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { currentUser } = useAuth();
 
   const handleEditBtn = () => {
     editBlog(blog);
@@ -20,7 +20,7 @@ function Post({ blog, deletePost, editBlog }) {
           <p>{blog.brief}</p>
         </div>
       </Link>
-      {user ? (
+      {currentUser ? (
         <span>
           <button onClick={() => deletePost(blog.id)}>delete</button>
           <button onClick={handleEditBtn}>edit</button>

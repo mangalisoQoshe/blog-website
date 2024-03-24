@@ -12,7 +12,7 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { login, logout, user,isLoading } = useAuth();
+  const { login, logout, currentUser,isLoading } = useAuth();
 
   const { state } = useLocation();
 
@@ -54,9 +54,9 @@ const Login = () => {
     }
   };
 
-  return isLoading ? (
-    <Spinner />
-  ) : user ? (
+  if(isLoading) return <Spinner/>
+
+  return  currentUser ? (
     <button onClick={handleSignOut}>Sign Out</button>
   ) : (
     <form onSubmit={handleLogin}>

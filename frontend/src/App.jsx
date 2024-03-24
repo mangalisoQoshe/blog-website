@@ -22,7 +22,8 @@ function App() {
   const [editedBlog, setEditedBlog] = useState({
     title: "",
     brief: "",
-    content: "",
+    body: "",
+    publishDate:new Date(),
     tags: [],
   });
 
@@ -31,7 +32,7 @@ function App() {
       .getAll()
       .then((blogList) => setBlogs(blogList))
       .catch((err) => {
-        console.log("Server offline", err);
+        console.log(err);
       });
   }, []);
 
