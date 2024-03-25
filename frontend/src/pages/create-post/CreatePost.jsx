@@ -8,26 +8,13 @@ function CreatePost({ editedBlog, addBlog }) {
   const [tagList, setTagList] = useState([...editedBlog.tags]);
   const navigate = useNavigate();
 
- 
-
   const handleChangeInput = (e) => {
-    switch (e.target.name) {
-      case "title":
-        setInput({ ...input, title: e.target.value });
-        break;
+    const { name, value } = e.target;
 
-      case "brief":
-        setInput({ ...input, brief: e.target.value });
-        break;
-
-      case "tag":
-        setInput({ ...input, tag: e.target.value });
-        break;
-
-      default:
-        console.log("Error occured in CreatePost component: unknown case");
-        break;
-    }
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleEditor = (value) => {
@@ -40,7 +27,6 @@ function CreatePost({ editedBlog, addBlog }) {
     //generate id
     const id = Math.ceil(Math.random() * 1000);
 
-
     addBlog({
       id: id,
       tags: [...tagList],
@@ -50,12 +36,13 @@ function CreatePost({ editedBlog, addBlog }) {
       publishDate: new Date().toDateString(),
     });
 
-    navigate(`/blog/${input.id}`)
+    navigate(`/blog/${input.id}`);
   };
 
   const handleAddTagBtn = (e) => {
     e.preventDefault();
-    setTagList([...tagList, input.tag]);
+
+    setTagList((prev) => [...prev, input.tag]);
     setInput({ ...input, tag: "" });
   };
 
@@ -120,7 +107,6 @@ function CreatePost({ editedBlog, addBlog }) {
       </div>
       <div>
         <EditorComponent input={input} handleEditor={handleEditor} />
-       
       </div>
       <button type="submit">Post</button>
     </form>

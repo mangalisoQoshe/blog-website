@@ -23,6 +23,7 @@ function App() {
     title: "",
     brief: "",
     body: "",
+    tag:"",
     publishDate:new Date(),
     tags: [],
   });
@@ -48,10 +49,15 @@ function App() {
     setEditedBlog(blog);
   };
 
+  const updateBlog=(blog)=>{
+    setBlogs((prevState)=>prevState.map((b=> (b.id === blog.id ? blog: b))))
+  }
+
   const resetEditedBlog = () => {
     setEditedBlog({
       title: "",
       brief: "",
+      tag:"",
       content: "",
       tags: [],
     });

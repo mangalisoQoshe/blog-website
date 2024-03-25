@@ -38,10 +38,13 @@ const Login = () => {
 
   const handleInput = (e) => {
     const { name, value } = e.target;
+  
     setInput((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    console.log(input)
   };
 
   const handleSignOut = async () => {
