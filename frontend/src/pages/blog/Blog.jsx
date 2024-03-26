@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+
 import styles from "./Blog.module.css";
 
 import Post from "../../components/post/Post";
 
-function Blog({ blogs, deletePost, editBlog }) {
+function Blog({ blogs, deletePost }) {
   return (
     <div>
       <div>
@@ -23,7 +23,6 @@ function Blog({ blogs, deletePost, editBlog }) {
                 key={blog.id}
                 blog={blog}
                 deletePost={deletePost}
-                editBlog={editBlog}
               />
             );
           })}

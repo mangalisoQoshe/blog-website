@@ -16,17 +16,10 @@ import Login from "./pages/login/Login";
 import CreatePost from "./pages/create-post/CreatePost";
 import AuthProvider from "./context/authContext/AuthProvider";
 import RequireAuth from "./components/require-auth/RequireAuth";
+import EditBlog from "./pages/edit-blog/EditBlog";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
-  const [editedBlog, setEditedBlog] = useState({
-    title: "",
-    brief: "",
-    body: "",
-    tag:"",
-    publishDate:new Date(),
-    tags: [],
-  });
 
   useEffect(() => {
     blogService
@@ -45,47 +38,38 @@ function App() {
     setBlogs((prevState) => [...prevState, blog]);
   };
 
-  const editBlog = (blog) => {
-    setEditedBlog(blog);
-  };
-
-  const updateBlog=(blog)=>{
-    setBlogs((prevState)=>prevState.map((b=> (b.id === blog.id ? blog: b))))
-  }
-
-  const resetEditedBlog = () => {
-    setEditedBlog({
-      title: "",
-      brief: "",
-      tag:"",
-      content: "",
-      tags: [],
-    });
+  const updateBlog = (blog) => {
+    setBlogs((prevState) =>
+      prevState.map((b) => (b.id === blog.id ? blog : b))
+    );
   };
 
   return (
     <div className="container">
       <AuthProvider>
         <Router>
-          <Nav resetEditedBlog={resetEditedBlog} />
+          <Nav />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route
               path="/blog"
-              element={
-                <Blog
-                  blogs={blogs}
-                  deletePost={deletePost}
-                  editBlog={editBlog}
-                />
-              }
+              element={<Blog blogs={blogs} deletePost={deletePost} />}
             />
             <Route
-              path="/create-post"
+              path="/create-blog"
               element={
                 <RequireAuth>
-                  <CreatePost editedBlog={editedBlog} addBlog={addBlog} />
+                  <CreatePost addBlog={addBlog} />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/edit-blog"
+              element={
+                <RequireAuth>
+                  <EditBlog addBlog={addBlog} />
                 </RequireAuth>
               }
             />

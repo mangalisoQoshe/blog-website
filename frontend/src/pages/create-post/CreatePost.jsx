@@ -1,12 +1,29 @@
+import Spinner from "../../components/spinner/Spinner";
 import EditorComponent from "../../components/txt-editor/EditorComponent";
 import styles from "./CreatePost.module.css";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function CreatePost({ editedBlog, addBlog }) {
-  const [input, setInput] = useState({ ...editedBlog });
-  const [tagList, setTagList] = useState([...editedBlog.tags]);
+function CreatePost({ addBlog }) {
+  const [input, setInput] = useState({
+    title: "",
+    brief: "",
+    body: "",
+    tag: "",
+    publishDate: new Date(),
+    tags: [],
+  });
+  const [tagList, setTagList] = useState([]);
+  const [isLoading,setIsLoading] = useState(true)
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      setInput({ ...location.state });
+      setTagList([...location.state.tags])
+    }
+  }, []);
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -49,6 +66,8 @@ function CreatePost({ editedBlog, addBlog }) {
   const deleteTag = (id) => {
     setTagList((prevState) => prevState.filter((t) => t != id));
   };
+
+  //if(isLoading) return <Spinner/>
 
   return (
     <form onSubmit={handleFormSubmitBtn}>
@@ -106,7 +125,7 @@ function CreatePost({ editedBlog, addBlog }) {
         </div>
       </div>
       <div>
-        <EditorComponent input={input} handleEditor={handleEditor} />
+        <EditorComponent input={input} handleEditor={handleEditor} setIsLoading={setIsLoading} />
       </div>
       <button type="submit">Post</button>
     </form>

@@ -7,11 +7,9 @@ import { MoonIcon } from "../icons/Icons";
 import ActiveLink from "../active-link/ActiveLink";
 import useAuth from "../../context/authContext/useAuth";
 
-function Nav({ resetEditedBlog }) {
+function Nav() {
   const { currentUser } = useAuth();
-  const handleClick = () => {
-    resetEditedBlog();
-  };
+
   return (
     <div className={styles.nav}>
       <NavLink to="/login" className={styles.link}>
@@ -21,11 +19,9 @@ function Nav({ resetEditedBlog }) {
       <ActiveLink to="/">Home</ActiveLink>
       <ActiveLink to="/blog">Blog</ActiveLink>
       {currentUser ? (
-        <div onClick={() => handleClick()}>
-          <NavLink to="/create-post" className={styles.link}>
-            Create Post
-          </NavLink>
-        </div>
+        <NavLink to="/create-blog" className={styles.link}>
+          Create Blog
+        </NavLink>
       ) : null}
 
       <button>

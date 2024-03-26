@@ -2,13 +2,13 @@ import useAuth from "../../context/authContext/useAuth";
 import styles from "./Post.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
-function Post({ blog, deletePost, editBlog }) {
+function Post({ blog, deletePost }) {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
   const handleEditBtn = () => {
-    editBlog(blog);
-    navigate("/create-post");
+  
+    navigate("/edit-blog", { state: blog });
   };
   return (
     <div className={styles["blog-post"]}>
