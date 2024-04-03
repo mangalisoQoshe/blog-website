@@ -1,105 +1,98 @@
 package main
 
 import (
-	"fmt"
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"context"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const version = "1.0.0"
 
-type config struct{
+var ctx, cancel = context.WithTimeout(context.Background(),20 * time.Second)
+
+type config struct {
 	port int
-	env string
+	env  string
+	db_dsn string
+
 }
 
-type application struct{
+type application struct {
 	config config
 	logger *log.Logger
 }
 
-func main(){
+func main() {
 	var cfg config
 
-	flag.IntVar(&cfg.port,"port",8080,"API server port")
-	flag.StringVar(&cfg.env,"env","development","Environment {developemnt|staging|production}")
+	flag.IntVar(&cfg.port, "port", 8080, "API server port")
+	flag.StringVar(&cfg.env, "env", "development", "Environment {developemnt|staging|production}")
+	flag.StringVar(&cfg.db_dsn,"db-dsn",os.Getenv("BLOG_DB_DSN"), "MongoDB DSN")
+	
 	flag.Parse()
 	
-	logger := log.New(os.Stdout,"",log.Ldate | log.Ltime)
+
+	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
+
+	db, err := openDB(cfg)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	logger.Printf("database connection pool established")
+
+	
+
+	defer db.Disconnect(ctx); 
+	
+	
 
 	app := &application{
 		config: cfg,
 		logger: logger,
 	}
 
-
-
 	srv := &http.Server{
-		Addr: fmt.Sprintf(":%d",cfg.port),
-		Handler: app.routes(),
-		IdleTimeout: time.Minute,
-		ReadTimeout: 10 * time.Second,
+		Addr:         fmt.Sprintf(":%d", cfg.port),
+		Handler:      app.routes(),
+		IdleTimeout:  time.Minute,
+		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,
 	}
 
-	logger.Printf("Starting %s server on %s",cfg.env,srv.Addr)
-	err := srv.ListenAndServe()
+	logger.Printf("Starting %s server on %s", cfg.env, srv.Addr)
+	err = srv.ListenAndServe()
 	logger.Fatal(err)
 }
 
+func openDB(cfg config) (*mongo.Client, error) {
+	// Use the SetServerAPIOptions() method to set the version of the Stable API on the client
+	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+	opts := options.Client().ApplyURI(cfg.db_dsn).SetServerAPIOptions(serverAPI)
+	defer cancel()
+
+	// Create a new client and connect to the server
+	client, err := mongo.Connect(ctx, opts)
+	if err != nil {
+		return nil,err
+	}
+
+	// Send a ping to confirm a successful connection
+	if err := client.Database("admin").RunCommand(context.TODO(), bson.D{{"ping", 1}}).Err(); err != nil {
+		return nil, err
+	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	return client,nil
+}
 
 // import (
 // 	"encoding/json"
@@ -181,7 +174,6 @@ func main(){
 // 	// Start the server
 // 	fmt.Println("Server listening on port 8080...")
 // 	log.Fatal(http.ListenAndServe(":8080", nil))
-
 
 // }
 

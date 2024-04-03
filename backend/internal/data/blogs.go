@@ -1,6 +1,9 @@
 package data
 
-import "blog.godhand/internal/validator"
+import (
+	"blog.godhand/internal/validator"
+	"go.mongodb.org/mongo-driver/mongo"
+)
 
 type Blog struct {
 	ID        int64    `json:"id"`
@@ -12,6 +15,10 @@ type Blog struct {
 	Brief     string   `json:"brief"`
 	Version   int32    `json:"version"` // The version number starts at 1 and will be incremented each
 	// time the blog information is updated
+}
+
+type BlogModel struct{
+	DB *mongo.Client
 }
 
 func ValidateBlog(v *validator.Validator, blog *Blog) {
@@ -35,3 +42,5 @@ func ValidateBlog(v *validator.Validator, blog *Blog) {
 	v.Check(validator.Unique(blog.Tags), "tags", "must not contain duplicate values")
 
 }
+
+
