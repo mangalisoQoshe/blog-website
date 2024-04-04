@@ -10,6 +10,7 @@ import (
 
 	"context"
 
+	"blog.godhand/internal/data"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -17,18 +18,16 @@ import (
 
 const version = "1.0.0"
 
-var ctx, cancel = context.WithTimeout(context.Background(),20 * time.Second)
-
 type config struct {
-	port int
-	env  string
+	port   int
+	env    string
 	db_dsn string
-
 }
 
 type application struct {
 	config config
 	logger *log.Logger
+	models data.Models
 }
 
 func main() {
@@ -36,29 +35,31 @@ func main() {
 
 	flag.IntVar(&cfg.port, "port", 8080, "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "Environment {developemnt|staging|production}")
-	flag.StringVar(&cfg.db_dsn,"db-dsn",os.Getenv("BLOG_DB_DSN"), "MongoDB DSN")
-	
+	flag.StringVar(&cfg.db_dsn, "db-dsn", os.Getenv("BLOG_DB_DSN"), "MongoDB DSN")
+
 	flag.Parse()
-	
 
-	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
+	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
 
-	db, err := openDB(cfg)
+	mongo_client, ctx, err := openDB(cfg)
 	if err != nil {
 		logger.Fatal(err)
 	}
 	logger.Printf("database connection pool established")
+	// var ctx, _ = context.WithTimeout(context.Background(),20 * time.Second)
+	// databases, err := mongo_client.ListDatabaseNames(context.TODO(), bson.M{})
 
-	
+	//logger.Println(databases)
+	//logger.Println(mongo_client.id)
 
-	defer db.Disconnect(ctx); 
-	
-	
+	defer mongo_client.Disconnect(ctx)
 
 	app := &application{
 		config: cfg,
 		logger: logger,
+		models: data.NewModels(getCollection(mongo_client, "Blogs")),
 	}
+	
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
@@ -73,7 +74,9 @@ func main() {
 	logger.Fatal(err)
 }
 
-func openDB(cfg config) (*mongo.Client, error) {
+// connect to mongoDB and return a client instance
+func openDB(cfg config) (*mongo.Client, context.Context, error) {
+	var ctx, cancel = context.WithTimeout(context.Background(), 20*time.Second)
 	// Use the SetServerAPIOptions() method to set the version of the Stable API on the client
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	opts := options.Client().ApplyURI(cfg.db_dsn).SetServerAPIOptions(serverAPI)
@@ -82,16 +85,21 @@ func openDB(cfg config) (*mongo.Client, error) {
 	// Create a new client and connect to the server
 	client, err := mongo.Connect(ctx, opts)
 	if err != nil {
-		return nil,err
+		return nil, ctx, err
 	}
 
 	// Send a ping to confirm a successful connection
 	if err := client.Database("admin").RunCommand(context.TODO(), bson.D{{"ping", 1}}).Err(); err != nil {
-		return nil, err
+		return nil, ctx, err
 	}
 
+	return client,ctx, nil
+}
 
-	return client,nil
+// get a collection from the 'Blog' database
+func getCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+	collection := client.Database("Blog").Collection(collectionName)
+	return collection
 }
 
 // import (

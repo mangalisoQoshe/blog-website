@@ -2,20 +2,26 @@ package main
 
 import (
 	"fmt"
+	
+
 	"net/http"
 	"time"
 
 	"blog.godhand/internal/data"
 	"blog.godhand/internal/validator"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (app *application) createBlogHandler(w http.ResponseWriter, r *http.Request) {
 
 	var input struct {
-		Title string   `json:"title"`
-		Tags  []string `json:"tags"`
-		Body  string   `json:"body"`
-		Brief string   `json:"brief"`
+		ID        primitive.ObjectID `json:"id"  bson:"_id"`
+		Title     string             `json:"title"`
+		CreatedAt data.DateType      `json:"createdAt"`
+		Tags      []string           `json:"tags"`
+		Body      string             `json:"body"`
+		Brief     string             `json:"brief"`
+		Version   int32              `json:"version"`
 	}
 
 	err := app.readJSON(w, r, &input)
@@ -25,10 +31,13 @@ func (app *application) createBlogHandler(w http.ResponseWriter, r *http.Request
 	}
 
 	blog := &data.Blog{
-		Title: input.Title,
-		Tags:  input.Tags,
-		Body:  input.Body,
-		Brief: input.Body,
+		ID:        primitive.NewObjectID(),
+		Title:     input.Title,
+		Tags:      input.Tags,
+		Body:      input.Body,
+		Brief:     input.Body,
+		Version:   0,
+		CreatedAt: data.DateType(time.Now()),
 	}
 
 	v := validator.New()
@@ -41,8 +50,17 @@ func (app *application) createBlogHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	//fmt.Fprintf(w, "%+v\n", input)
-	err = app.writeJSON(w, http.StatusOK, envelope{"blog": input}, nil)
+	//insert the blog into the database
+	err = app.models.Blogs.Insert(blog)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+		return
+	}
+
+	headers := make(http.Header)
+	headers.Set("Location", fmt.Sprintf("v1/blogs/%s", blog.ID.Hex()))
+
+	err = app.writeJSON(w, http.StatusCreated, envelope{"blog": blog}, headers)
 
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
@@ -59,8 +77,15 @@ func (app *application) showBlogHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
+	objId, err := primitive.ObjectIDFromHex(blogId)
+
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+		return
+	}
+
 	blog := data.Blog{
-		ID:        blogId,
+		ID:        objId,
 		Title:     "How to write idomatic Golang",
 		CreatedAt: data.DateType(time.Now()),
 		UpdatedAt: data.DateType(time.Now()),

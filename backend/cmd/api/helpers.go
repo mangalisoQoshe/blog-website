@@ -6,22 +6,22 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strconv"
+
 	"strings"
 )
 
 type envelope map[string]interface{}
 
-func (app *application) readIDPathValue(r *http.Request) (int64, error) {
+func (app *application) readIDPathValue(r *http.Request) (string, error) {
 	id := r.PathValue("blogId")
 
-	blogId, err := strconv.ParseInt(id, 10, 64)
+	//blogId, err := strconv.ParseInt(id, 10, 64)
 
-	if err != nil || blogId < 1 {
-		return 0, errors.New("Invalid id value")
+	if len(id) == 0 { //if id is empty throw an error and return ""
+		return "", errors.New("Invalid id value")
 	}
 
-	return blogId, nil
+	return id, nil
 }
 
 func (app *application) writeJSON(w http.ResponseWriter, status int, data envelope, headers http.Header) error {
@@ -37,7 +37,7 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data envelo
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
+	//w.WriteHeader(status)
 	w.Write(js)
 
 	return nil

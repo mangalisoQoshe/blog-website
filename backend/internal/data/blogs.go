@@ -1,24 +1,49 @@
 package data
 
 import (
+	"context"
+	"time"
+
 	"blog.godhand/internal/validator"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type Blog struct {
-	ID        int64    `json:"id"`
-	Title     string   `json:"title"`
-	CreatedAt DateType `json:"createdAt"`
-	UpdatedAt DateType `json:"updatedAt,omitempty"`
-	Tags      []string `json:"tags"`
-	Body      string   `json:"body"`
-	Brief     string   `json:"brief"`
-	Version   int32    `json:"version"` // The version number starts at 1 and will be incremented each
+	ID        primitive.ObjectID `json:"id"  bson:"_id"`
+	Title     string             `json:"title"`
+	CreatedAt DateType           `json:"createdAt"`
+	UpdatedAt DateType           `json:"updatedAt,omitempty"`
+	Tags      []string           `json:"tags"`
+	Body      string             `json:"body"`
+	Brief     string             `json:"brief"`
+	Version   int32              `json:"version"` // The version number starts at 1 and will be incremented each
 	// time the blog information is updated
 }
 
-type BlogModel struct{
-	DB *mongo.Client
+var ctx, _ = context.WithTimeout(context.Background(), 30*time.Second)
+
+type BlogModel struct {
+	BlogsCollection *mongo.Collection
+}
+
+func (b BlogModel) Insert(blog *Blog) error {
+	_, err := b.BlogsCollection.InsertOne(ctx, blog)
+
+	return err
+}
+
+func (b BlogModel) Get(id int64) (*Blog, error) {
+	return nil, nil
+}
+
+func (b BlogModel) Update(blog *Blog) error {
+	return nil
+}
+
+func (b BlogModel) Delete(id int64) error {
+	return nil
 }
 
 func ValidateBlog(v *validator.Validator, blog *Blog) {
@@ -42,5 +67,3 @@ func ValidateBlog(v *validator.Validator, blog *Blog) {
 	v.Check(validator.Unique(blog.Tags), "tags", "must not contain duplicate values")
 
 }
-
-
