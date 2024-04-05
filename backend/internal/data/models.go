@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	ErrRecordNotFound = errors.New("Record Not Found.")
+	ErrResultNotFound = errors.New("Unable to Find result.")
+	ErrUnableFindAll = errors.New("Unable to fetch blogs")
 )
 
 type Models struct {

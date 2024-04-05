@@ -8,12 +8,8 @@ import (
 	"os"
 	"time"
 
-	"context"
-
 	"blog.godhand/internal/data"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"blog.godhand/internal/database"
 )
 
 const version = "1.0.0"
@@ -41,25 +37,24 @@ func main() {
 
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
 
-	mongo_client, ctx, err := openDB(cfg)
+	err := database.OpenDB(cfg.db_dsn)
 	if err != nil {
 		logger.Fatal(err)
 	}
 	logger.Printf("database connection pool established")
-	// var ctx, _ = context.WithTimeout(context.Background(),20 * time.Second)
-	// databases, err := mongo_client.ListDatabaseNames(context.TODO(), bson.M{})
 
-	//logger.Println(databases)
-	//logger.Println(mongo_client.id)
-
-	defer mongo_client.Disconnect(ctx)
+	defer func() {
+		err = database.CloseDB()
+		if err != nil {
+			logger.Println(err)
+		}
+	}()
 
 	app := &application{
 		config: cfg,
 		logger: logger,
-		models: data.NewModels(getCollection(mongo_client, "Blogs")),
+		models: data.NewModels(database.GetCollection("Blogs")),
 	}
-	
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
@@ -72,34 +67,6 @@ func main() {
 	logger.Printf("Starting %s server on %s", cfg.env, srv.Addr)
 	err = srv.ListenAndServe()
 	logger.Fatal(err)
-}
-
-// connect to mongoDB and return a client instance
-func openDB(cfg config) (*mongo.Client, context.Context, error) {
-	var ctx, cancel = context.WithTimeout(context.Background(), 20*time.Second)
-	// Use the SetServerAPIOptions() method to set the version of the Stable API on the client
-	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
-	opts := options.Client().ApplyURI(cfg.db_dsn).SetServerAPIOptions(serverAPI)
-	defer cancel()
-
-	// Create a new client and connect to the server
-	client, err := mongo.Connect(ctx, opts)
-	if err != nil {
-		return nil, ctx, err
-	}
-
-	// Send a ping to confirm a successful connection
-	if err := client.Database("admin").RunCommand(context.TODO(), bson.D{{"ping", 1}}).Err(); err != nil {
-		return nil, ctx, err
-	}
-
-	return client,ctx, nil
-}
-
-// get a collection from the 'Blog' database
-func getCollection(client *mongo.Client, collectionName string) *mongo.Collection {
-	collection := client.Database("Blog").Collection(collectionName)
-	return collection
 }
 
 // import (

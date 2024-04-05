@@ -14,6 +14,7 @@ func (app *application) routes() *http.ServeMux{
 	router.HandleFunc("GET /v1/blogs",app.showBlogsHandler)
 	router.HandleFunc("POST /v1/blogs",app.createBlogHandler)
 	router.HandleFunc("GET /v1/blogs/{blogId}",app.showBlogHandler)
+	router.HandleFunc("PUT /v1/blogs/{blogId}",app.updateBlogHandler)
 
 	return router
 	

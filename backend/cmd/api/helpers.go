@@ -20,6 +20,8 @@ func (app *application) readIDPathValue(r *http.Request) (string, error) {
 	if len(id) == 0 { //if id is empty throw an error and return ""
 		return "", errors.New("Invalid id value")
 	}
+	
+	
 
 	return id, nil
 }
