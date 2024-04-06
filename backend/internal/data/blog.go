@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"errors"
 	"log"
 	"time"
 
@@ -16,7 +17,7 @@ type Blog struct {
 	ID        primitive.ObjectID `json:"id,omitempty"  bson:"_id,omitempty"`
 	Title     string             `json:"title" bson:"title"`
 	CreatedAt time.Time          `json:"createdAt" bson:"createdAt"`
-	UpdatedAt time.Time          `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+	UpdatedAt time.Time          `json:"updatedAt" bson:"updatedAt"`
 	Tags      []string           `json:"tags" bson:"tags"`
 	Body      string             `json:"body" bson:"body"`
 	Brief     string             `json:"brief" bson:"brief"`
@@ -33,19 +34,17 @@ type CreateBlog struct {
 	Version   int32     `json:"version" bson:"version"`
 }
 
-var ctx, _ = context.WithTimeout(context.Background(), 30*time.Second)
-
 type BlogModel struct {
 	BlogsCollection *mongo.Collection
 }
 
-func (b BlogModel) Insert(blog *CreateBlog) (*mongo.InsertOneResult, error) {
+func (b BlogModel) Insert(blog *CreateBlog, ctx context.Context) (*mongo.InsertOneResult, error) {
 	result, err := b.BlogsCollection.InsertOne(ctx, blog)
 
 	return result, err
 }
 
-func (b BlogModel) GetAll() (*[]Blog, error) {
+func (b BlogModel) GetAll(ctx context.Context) (*[]Blog, error) {
 	cursor, err := b.BlogsCollection.Find(ctx, bson.M{})
 	if err != nil {
 		return nil, ErrUnableFindAll
@@ -59,7 +58,7 @@ func (b BlogModel) GetAll() (*[]Blog, error) {
 	return &blogs, nil
 }
 
-func (b BlogModel) Get(id primitive.ObjectID) (*Blog, error) {
+func (b BlogModel) Get(id primitive.ObjectID, ctx context.Context) (*Blog, error) {
 
 	results := b.BlogsCollection.FindOne(ctx, primitive.M{"_id": id})
 	var blog Blog
@@ -70,23 +69,29 @@ func (b BlogModel) Get(id primitive.ObjectID) (*Blog, error) {
 	return &blog, nil
 }
 
-func (b BlogModel) Update(blog *Blog) error {
+// not functional, i don't know why
+func (b BlogModel) Update(blog *Blog, ctx context.Context) error {
 
-	update := bson.M{"title": blog.Title, "body": blog.Body, "createdAt": blog.CreatedAt, "updatedAt": blog.UpdatedAt, "brief": blog.Brief, "tags": blog.Tags, "version": blog.Version}
-	//data, err := bson.Marshal(blog)
-	// if err != nil{
-	// 	return err
-	// }
 
-	res, err := b.BlogsCollection.UpdateOne(ctx, bson.M{"_id": blog.ID}, bson.M{"$set": update})
-	log.Println(res)
-	//log.Println(res.UpsertedCount)
-	//log.Println(blog.ID)
+	filter := bson.M{"_id": blog.ID}
+	update := bson.M{"$set": bson.M{"title": blog.Title, "body": blog.Body, "createdAt": blog.CreatedAt, "updatedAt": blog.UpdatedAt, "brief": blog.Brief, "tags": blog.Tags, "version": blog.Version}}
+	res, err := b.BlogsCollection.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return err
+	}
+
+	log.Println(res.MatchedCount, res.ModifiedCount, res.UpsertedCount)
+
 	return err
 }
 
-func (b BlogModel) Delete(id int64) error {
-	return nil
+func (b BlogModel) Delete(ctx context.Context, id primitive.ObjectID) error {
+	result, err := b.BlogsCollection.DeleteOne(ctx, bson.M{"_id": id})
+	log.Printf("Number of documents deleted %d\n", result.DeletedCount)
+	if result.DeletedCount == 0 {
+		return errors.New("product not found")
+	}
+	return err
 }
 
 func ValidateBlog(v *validator.Validator, blog *CreateBlog) {
