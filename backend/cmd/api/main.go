@@ -10,6 +10,7 @@ import (
 
 	"blog.godhand/internal/data"
 	"blog.godhand/internal/database"
+	"blog.godhand/internal/jsonlog"
 )
 
 const version = "1.0.0"
@@ -22,7 +23,7 @@ type config struct {
 
 type application struct {
 	config config
-	logger *log.Logger
+	logger *jsonlog.Logger
 	models data.Models
 }
 
@@ -35,18 +36,18 @@ func main() {
 
 	flag.Parse()
 
-	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
+	logger := jsonlog.New(os.Stdout, jsonlog.LevelInfo)
 
 	err := database.OpenDB(cfg.db_dsn)
 	if err != nil {
-		logger.Fatal(err)
+		logger.PrintFatal(err, nil)
 	}
-	logger.Printf("database connection pool established")
+	logger.PrintInfo("database connection pool established", nil)
 
 	defer func() {
 		err = database.CloseDB()
 		if err != nil {
-			logger.Println(err)
+			logger.PrintError(err, map[string]string{"MongoDB": "database failed to close connection"})
 		}
 	}()
 
@@ -59,14 +60,18 @@ func main() {
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
 		Handler:      app.routes(),
+		ErrorLog: log.New(logger,"",0),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,
 	}
 
-	logger.Printf("Starting %s server on %s", cfg.env, srv.Addr)
+	logger.PrintInfo("starting server", map[string]string{
+		"addr": srv.Addr,
+		"env":  cfg.env,
+	})
 	err = srv.ListenAndServe()
-	logger.Fatal(err)
+	logger.PrintFatal(err,nil)
 }
 
 // import (
