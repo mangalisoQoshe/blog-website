@@ -5,7 +5,7 @@ import (
 )
 
 
-func (app *application) routes() *http.ServeMux{
+func (app *application) routes() http.Handler{
 	router := http.NewServeMux();
 
 	router.HandleFunc("GET /v1/healthcheck",app.healthcheckHandler)
@@ -15,7 +15,7 @@ func (app *application) routes() *http.ServeMux{
 	router.HandleFunc("PUT /v1/blogs/{blogId}",app.updateBlogHandler)
 	router.HandleFunc("DELETE /v1/blogs/{blogId}",app.deleteBlogByIDHandler)
 
-	return router
+	return app.recoverPanic(router)
 	
 
 
