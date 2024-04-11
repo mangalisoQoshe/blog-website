@@ -15,7 +15,7 @@ func (app *application) routes() http.Handler{
 	router.HandleFunc("PUT /v1/blogs/{blogId}",app.updateBlogHandler)
 	router.HandleFunc("DELETE /v1/blogs/{blogId}",app.deleteBlogByIDHandler)
 
-	return app.recoverPanic(router)
+	return app.recoverPanic(app.rateLimit(router))
 	
 
 

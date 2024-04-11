@@ -19,6 +19,12 @@ type config struct {
 	port   int
 	env    string
 	db_dsn string
+
+	limiter struct {
+		rps    float64
+		burst  int
+		enabled bool
+	}
 }
 
 type application struct {
@@ -33,6 +39,10 @@ func main() {
 	flag.IntVar(&cfg.port, "port", 8080, "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "Environment {developemnt|staging|production}")
 	flag.StringVar(&cfg.db_dsn, "db-dsn", os.Getenv("BLOG_DB_DSN"), "MongoDB DSN")
+
+	flag.Float64Var(&cfg.limiter.rps, "limiter-rps", 2, "Rate limiter maximum requests per second")
+	flag.IntVar(&cfg.limiter.burst, "limiter-burst", 4, "Rate limiter maximum burst")
+	flag.BoolVar(&cfg.limiter.enabled, "limiter-enabled", true, "Enable rate limiter")
 
 	flag.Parse()
 
@@ -60,7 +70,7 @@ func main() {
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
 		Handler:      app.routes(),
-		ErrorLog: log.New(logger,"",0),
+		ErrorLog:     log.New(logger, "", 0),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,
@@ -71,7 +81,7 @@ func main() {
 		"env":  cfg.env,
 	})
 	err = srv.ListenAndServe()
-	logger.PrintFatal(err,nil)
+	logger.PrintFatal(err, nil)
 }
 
 // import (
