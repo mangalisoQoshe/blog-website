@@ -2,11 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"log"
-	"net/http"
 	"os"
-	"time"
 
 	"blog.godhand/internal/data"
 	"blog.godhand/internal/database"
@@ -21,8 +17,8 @@ type config struct {
 	db_dsn string
 
 	limiter struct {
-		rps    float64
-		burst  int
+		rps     float64
+		burst   int
 		enabled bool
 	}
 }
@@ -67,21 +63,10 @@ func main() {
 		models: data.NewModels(database.GetCollection("Blogs")),
 	}
 
-	srv := &http.Server{
-		Addr:         fmt.Sprintf(":%d", cfg.port),
-		Handler:      app.routes(),
-		ErrorLog:     log.New(logger, "", 0),
-		IdleTimeout:  time.Minute,
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 30 * time.Second,
+	err = app.serve()
+	if err != nil {
+		logger.PrintFatal(err, nil)
 	}
-
-	logger.PrintInfo("starting server", map[string]string{
-		"addr": srv.Addr,
-		"env":  cfg.env,
-	})
-	err = srv.ListenAndServe()
-	logger.PrintFatal(err, nil)
 }
 
 // import (
