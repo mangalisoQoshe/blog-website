@@ -8,18 +8,20 @@ import (
 )
 
 var (
-	ErrResultNotFound = errors.New("Unable to Find result.")
-	ErrUnableFindAll = errors.New("Unable to fetch blogs")
+	ErrResultNotFound = errors.New("unable to Find result.")
+	ErrUnableFindAll = errors.New("unable to fetch blogs")
 )
 
 type Models struct {
 	Blogs BlogModel
+	Users UserModel
 	
 }
 
-func NewModels(collection *mongo.Collection) Models {
+func NewModels(Bcollection *mongo.Collection,Ucollection *mongo.Collection) Models {
 	return Models{
-		Blogs: BlogModel{BlogsCollection: collection},
+		Blogs: BlogModel{BlogsCollection: Bcollection},
+		Users: UserModel{UsersCollection: Ucollection},
 		
 	}
 }

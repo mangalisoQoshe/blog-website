@@ -59,6 +59,8 @@ const Login = () => {
 
   if(isLoading) return <Spinner/>
 
+  console.log(currentUser)
+
   return  currentUser ? (
     <button onClick={handleSignOut}>Sign Out</button>
   ) : (
