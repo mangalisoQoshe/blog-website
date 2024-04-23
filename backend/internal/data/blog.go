@@ -38,13 +38,17 @@ type BlogModel struct {
 	BlogsCollection *mongo.Collection
 }
 
-func (b BlogModel) Insert(blog *CreateBlog, ctx context.Context) (*mongo.InsertOneResult, error) {
+func (b BlogModel) Insert(blog *CreateBlog) (*mongo.InsertOneResult, error) {
+	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
 	result, err := b.BlogsCollection.InsertOne(ctx, blog)
 
 	return result, err
 }
 
-func (b BlogModel) GetAll(ctx context.Context) (*[]Blog, error) {
+func (b BlogModel) GetAll() (*[]Blog, error) {
+	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
 	cursor, err := b.BlogsCollection.Find(ctx, bson.M{})
 	if err != nil {
 		return nil, ErrUnableFindAll
@@ -58,8 +62,9 @@ func (b BlogModel) GetAll(ctx context.Context) (*[]Blog, error) {
 	return &blogs, nil
 }
 
-func (b BlogModel) Get(id primitive.ObjectID, ctx context.Context) (*Blog, error) {
-
+func (b BlogModel) Get(id primitive.ObjectID) (*Blog, error) {
+	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
 	results := b.BlogsCollection.FindOne(ctx, primitive.M{"_id": id})
 	var blog Blog
 	err := results.Decode(&blog)
@@ -70,8 +75,9 @@ func (b BlogModel) Get(id primitive.ObjectID, ctx context.Context) (*Blog, error
 }
 
 // not functional, i don't know why
-func (b BlogModel) Update(blog *Blog, ctx context.Context) error {
-
+func (b BlogModel) Update(blog *Blog) error {
+	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
 
 	filter := bson.M{"_id": blog.ID}
 	update := bson.M{"$set": bson.M{"title": blog.Title, "body": blog.Body, "createdAt": blog.CreatedAt, "updatedAt": blog.UpdatedAt, "brief": blog.Brief, "tags": blog.Tags, "version": blog.Version}}
@@ -85,9 +91,10 @@ func (b BlogModel) Update(blog *Blog, ctx context.Context) error {
 	return err
 }
 
-func (b BlogModel) Delete(ctx context.Context, id primitive.ObjectID) error {
+func (b BlogModel) Delete(id primitive.ObjectID) error {
+	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
 	result, err := b.BlogsCollection.DeleteOne(ctx, bson.M{"_id": id})
-	log.Printf("Number of documents deleted %d\n", result.DeletedCount)
 	if result.DeletedCount == 0 {
 		return errors.New("product not found")
 	}

@@ -40,7 +40,7 @@ func main() {
 
 	flag.IntVar(&cfg.port, "port", 8080, "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "Environment {developemnt|staging|production}")
-	flag.StringVar(&cfg.db_dsn, "db-dsn", os.Getenv("BLOG_DB_DSN"), "MongoDB DSN")
+	flag.StringVar(&cfg.db_dsn, "db-dsn", "", "MongoDB DSN")
 
 	flag.Float64Var(&cfg.limiter.rps, "limiter-rps", 2, "Rate limiter maximum requests per second")
 	flag.IntVar(&cfg.limiter.burst, "limiter-burst", 4, "Rate limiter maximum burst")
@@ -71,14 +71,6 @@ func main() {
 		logger.PrintFatal(err, map[string]string{"Firebase": "failed to connect"})
 	}
 
-	// fb_client, err := firebase.Auth(context.Background())
-	// log.Println(fb_client)
-
-	// if err != nil {
-	// 	logger.PrintFatal(err, map[string]string{"Firebase": "failed to get client"})
-	// }
-
-	//tocken = eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkOWI0ZTY5ZTMyYjc2MTVkNGNkN2NhZmI4ZmM5YjNmODFhNDFhYzAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vc2Ftcy1ibG9nLWI4NjExIiwiYXVkIjoic2Ftcy1ibG9nLWI4NjExIiwiYXV0aF90aW1lIjoxNzExNDE5ODc5LCJ1c2VyX2lkIjoiM1lORWxXbHJOWFhHMmwxenFrTHBEQTFGYVo4MiIsInN1YiI6IjNZTkVsV2xyTlhYRzJsMXpxa0xwREExRmFaODIiLCJpYXQiOjE3MTMzNzM0NjUsImV4cCI6MTcxMzM3NzA2NSwiZW1haWwiOiJnb2RoYW5kQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJnb2RoYW5kQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.n21LUemf5_P_yXxBSXwPeq0vaxCas9eaRYKLyuUPQNS4nPPhAQgmcw2upQ_-sDiBLcYg8Ds9yOuh_QEAf3dvAYSAhQ6lHGPuQWkP3kmbhnpHtCkd650WDBf4aNnLp8rChjBtOpUl_j9ccI5AF3xoAev_iLvKUlweAoROU_Wz3MwkoWVTEj96YJVBh5IlAjZwv_vsEEcOFGYbYI_WXJgz3A7MPOndLZcQ2gGmpEq-xgtGNcvHhLoHW5QLeQPNoPHPkduEXJmEjEKP4N5spSn2lT4cF0muIklKn8jN6Y0iq9SGpBOLulqZI4Ek-Js0rz7i69xj916swnNx9WTfTAWZIA
 
 	logger.PrintInfo("firebase connection pool established", nil)
 

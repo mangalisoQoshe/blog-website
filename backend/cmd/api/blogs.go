@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 
 	"net/http"
@@ -13,8 +12,6 @@ import (
 )
 
 func (app *application) createBlogHandler(w http.ResponseWriter, r *http.Request) {
-	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
 
 	var input data.CreateBlog
 	err := app.readJSON(w, r, &input)
@@ -36,7 +33,7 @@ func (app *application) createBlogHandler(w http.ResponseWriter, r *http.Request
 	}
 
 	//insert the blog into the database
-	res, err := app.models.Blogs.Insert(&input, ctx)
+	res, err := app.models.Blogs.Insert(&input)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
@@ -64,8 +61,7 @@ func (app *application) createBlogHandler(w http.ResponseWriter, r *http.Request
 
 // show a blog with id
 func (app *application) showBlogHandler(w http.ResponseWriter, r *http.Request) {
-	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
+
 	blogId, err := app.readIDPathValue(r)
 	if err != nil {
 		app.notFoundResponse(w, r)
@@ -79,7 +75,7 @@ func (app *application) showBlogHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	blog, err := app.models.Blogs.Get(objId, ctx)
+	blog, err := app.models.Blogs.Get(objId)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
@@ -95,9 +91,8 @@ func (app *application) showBlogHandler(w http.ResponseWriter, r *http.Request) 
 
 // show all blogs
 func (app *application) showBlogsHandler(w http.ResponseWriter, r *http.Request) {
-	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	blogs, err := app.models.Blogs.GetAll(ctx)
+
+	blogs, err := app.models.Blogs.GetAll()
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
@@ -110,8 +105,7 @@ func (app *application) showBlogsHandler(w http.ResponseWriter, r *http.Request)
 }
 
 func (app *application) updateBlogHandler(w http.ResponseWriter, r *http.Request) {
-	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
+
 	var input data.CreateBlog
 	err := app.readJSON(w, r, &input)
 	if err != nil {
@@ -155,7 +149,7 @@ func (app *application) updateBlogHandler(w http.ResponseWriter, r *http.Request
 		Version:   input.Version + 1,
 	}
 
-	err = app.models.Blogs.Update(blog, ctx)
+	err = app.models.Blogs.Update(blog)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
@@ -170,8 +164,7 @@ func (app *application) updateBlogHandler(w http.ResponseWriter, r *http.Request
 }
 
 func (app *application) deleteBlogByIDHandler(w http.ResponseWriter, r *http.Request) {
-	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
+
 	blogId, err := app.readIDPathValue(r)
 	if err != nil {
 		app.notFoundResponse(w, r)
@@ -185,7 +178,7 @@ func (app *application) deleteBlogByIDHandler(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	err = app.models.Blogs.Delete(ctx, objId)
+	err = app.models.Blogs.Delete(objId)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return

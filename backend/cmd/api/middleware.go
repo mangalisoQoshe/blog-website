@@ -105,7 +105,6 @@ func (app *application) authenticate(next http.Handler) http.Handler {
 		//firebase client
 		client, err := app.firebase.Auth(ctx)
 		if err != nil {
-			app.logger.PrintError(err, map[string]string{"firebase": "error getting Auth client"})
 			app.serverErrorResponse(w, r, err)
 			return
 		}
@@ -140,7 +139,7 @@ func (app *application) requireAuthenticatedUser(next http.HandlerFunc) http.Han
 func (app *application) requireAuthozisedUser(next http.HandlerFunc) http.HandlerFunc {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		user := app.contextGetUser(r)
-		if !app.models.Users.IsAuthorized(user.UID) {
+		if !app.models.Users.IsAuthorized(user.Email) {
 			app.notPermittedResponse(w, r)
 			return
 		}

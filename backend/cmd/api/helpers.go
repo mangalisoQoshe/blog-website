@@ -17,8 +17,8 @@ func (app *application) readIDPathValue(r *http.Request) (string, error) {
 
 	//blogId, err := strconv.ParseInt(id, 10, 64)
 
-	if len(id) == 0 { //if id is empty throw an error and return ""
-		return "", errors.New("Invalid id value")
+	if len(id) == 0 { //if id is empty throw an error and return an empty string
+		return "", errors.New("invalid id value")
 	}
 	
 	
