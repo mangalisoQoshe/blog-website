@@ -40,7 +40,7 @@ func main() {
 
 	flag.IntVar(&cfg.port, "port", 8080, "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "Environment {developemnt|staging|production}")
-	flag.StringVar(&cfg.db_dsn, "db-dsn", "", "MongoDB DSN")
+	flag.StringVar(&cfg.db_dsn, "db-dsn", os.Getenv("BLOG_DB_DSN"), "MongoDB DSN")
 
 	flag.Float64Var(&cfg.limiter.rps, "limiter-rps", 2, "Rate limiter maximum requests per second")
 	flag.IntVar(&cfg.limiter.burst, "limiter-burst", 4, "Rate limiter maximum burst")
@@ -71,13 +71,12 @@ func main() {
 		logger.PrintFatal(err, map[string]string{"Firebase": "failed to connect"})
 	}
 
-
 	logger.PrintInfo("firebase connection pool established", nil)
 
 	app := &application{
 		config:   cfg,
 		logger:   logger,
-		models:   data.NewModels(database.GetCollection("Blogs"),database.GetCollection("Users")),
+		models:   data.NewModels(database.GetCollection("Blogs"), database.GetCollection("Users")),
 		firebase: firebase,
 	}
 

@@ -7,8 +7,6 @@ import (
 	"runtime/debug"
 	"sync"
 	"time"
-
-	
 )
 
 // Define a Level type to represent the severity level for a log entry.
@@ -92,10 +90,10 @@ func (l *Logger) print(level Level, message string, properties map[string]string
 	l.mu.Lock()
 	defer l.mu.Unlock()
 
-	return l.out.Write(append(line,'\n'))
+	return l.out.Write(append(line, '\n'))
 
 }
 
 func (l *Logger) Write(message []byte) (n int, err error) {
-	return l.print(LevelError,string(message),nil)
+	return l.print(LevelError, string(message), nil)
 }

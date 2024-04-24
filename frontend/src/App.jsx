@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     blogService
       .getAll()
-      .then((blogList) => setBlogs(blogList))
+      .then((blogList) => setBlogs(blogList.blogs))
       .catch((err) => {
         console.log(err);
       });

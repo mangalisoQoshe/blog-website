@@ -139,7 +139,7 @@ func (app *application) requireAuthenticatedUser(next http.HandlerFunc) http.Han
 func (app *application) requireAuthozisedUser(next http.HandlerFunc) http.HandlerFunc {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		user := app.contextGetUser(r)
-		if !app.models.Users.IsAuthorized(user.Email) {
+		if !app.models.Users.IsAuthorized(user.UID) {
 			app.notPermittedResponse(w, r)
 			return
 		}

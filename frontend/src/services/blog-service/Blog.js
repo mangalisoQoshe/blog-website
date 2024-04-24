@@ -1,12 +1,13 @@
 
 
-const endpoint = "/api/blogs";
+const endpoint = "/v1/blogs";
 
 const getAll = async () => {
   try {
     const response = await fetch(endpoint);
     const data = await response.json();
     if (response.ok) {
+    
       return data;
     } else {
       throw new Error("Server Error ", data.error.message);

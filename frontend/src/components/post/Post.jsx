@@ -15,7 +15,7 @@ function Post({ blog, deletePost }) {
       <Link to={"/blog/" + blog.id}>
         <div className={styles.content}>
           <h2>{blog.title}</h2>
-          <p className={styles.date}>{blog.pulishDate}</p>
+          <p className={styles.date}>{(new Date(blog.createdAt.slice(0,10))).toDateString()}</p>
           <div>{blog.tags.map((tag) => tag)}</div>
           <p>{blog.brief}</p>
         </div>

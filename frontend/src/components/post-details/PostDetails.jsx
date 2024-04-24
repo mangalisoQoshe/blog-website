@@ -11,9 +11,9 @@ function PostDetails() {
   useEffect(() => {
     blogService
       .getOne(id)
-      .then((response) => setPost(response))
+      .then((response) => setPost(response.blog))
       .catch((err) => {
-        console.log("failed to fetch post with ID: ", id);
+        console.log(`failed to fetch post with ID: ${id}`, err);
       });
   }, []);
 
@@ -22,12 +22,15 @@ function PostDetails() {
 
   }
 
+  //const publishDate = new Date(post.createdAt)
+  //console.log(post.createdAt)
+ 
   return (
     <>
       <button onClick={handleBackBtn}>Back</button>
       {post ? (
         <div>
-          <h2>{post.PublishDate}</h2>
+          <h2>Publish Date {(new Date(post.createdAt.slice(0,10))).toDateString()}</h2>
           <h2>{post.title}</h2>
           <p>{post.body}</p>
           <p>{(post.tags).map((tag)=>{return tag})}</p>

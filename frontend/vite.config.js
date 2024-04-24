@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
  proxy: {
-      '/api': {
-        target: 'http://localhost:8080', // Replace with your Go server URL
+      '/v1': {
+        target: 'http://localhost:4000', // Replace with your Go server URL
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, ''), // Remove the /api prefix
+        //rewrite: path => path.replace(/^\/v1/, ''), // Remove the /api prefix
         headers: {
           'Access-Control-Allow-Origin': '*', // Allow requests from any origin
         },

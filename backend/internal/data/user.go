@@ -23,10 +23,10 @@ type UserModel struct {
 	UsersCollection *mongo.Collection
 }
 
-func (u UserModel) IsAuthorized(email string) bool {
+func (u UserModel) IsAuthorized(uid string) bool {
 	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	filter := bson.M{"email": email}
+	filter := bson.M{"uid": uid}
 	count, err := u.UsersCollection.CountDocuments(ctx, filter)
 	if err != nil {
 		panic(err)
