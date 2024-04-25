@@ -90,6 +90,7 @@ func (app *application) authenticate(next http.Handler) http.Handler {
 		}
 
 		headerParts := strings.Split(authorizationHeader, " ")
+		
 
 		if len(headerParts) != 2 || headerParts[0] != "UID" {
 			app.invalidUserIDResponse(w, r)

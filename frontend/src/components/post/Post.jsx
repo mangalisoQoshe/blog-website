@@ -22,7 +22,7 @@ function Post({ blog, deletePost }) {
       </Link>
       {currentUser ? (
         <span>
-          <button onClick={() => deletePost(blog.id)}>delete</button>
+          <button onClick={() => deletePost(blog.id,currentUser.uid)}>delete</button>
           <button onClick={handleEditBtn}>edit</button>
         </span>
       ) : null}

@@ -1,4 +1,3 @@
-import Spinner from "../../components/spinner/Spinner";
 import EditorComponent from "../../components/txt-editor/EditorComponent";
 import styles from "./CreatePost.module.css";
 import { useEffect, useState } from "react";
@@ -13,8 +12,8 @@ function CreatePost({ addBlog }) {
     publishDate: new Date(),
     tags: [],
   });
+
   const [tagList, setTagList] = useState([]);
-  const [isLoading,setIsLoading] = useState(true)
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -66,6 +65,8 @@ function CreatePost({ addBlog }) {
   const deleteTag = (id) => {
     setTagList((prevState) => prevState.filter((t) => t != id));
   };
+
+  const loadingEditorComponent =  <EditorComponent input={input} handleEditor={handleEditor}  />
 
   //if(isLoading) return <Spinner/>
 
@@ -125,7 +126,7 @@ function CreatePost({ addBlog }) {
         </div>
       </div>
       <div>
-        <EditorComponent input={input} handleEditor={handleEditor} setIsLoading={setIsLoading} />
+       {loadingEditorComponent}
       </div>
       <button type="submit">Post</button>
     </form>

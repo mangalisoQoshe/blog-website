@@ -1,5 +1,3 @@
-
-
 const endpoint = "/v1/blogs";
 
 const getAll = async () => {
@@ -7,7 +5,6 @@ const getAll = async () => {
     const response = await fetch(endpoint);
     const data = await response.json();
     if (response.ok) {
-    
       return data;
     } else {
       throw new Error("Server Error ", data.error.message);
@@ -17,9 +14,9 @@ const getAll = async () => {
   }
 };
 
-const getOne = async(id) => {
+const getOne = async (id) => {
   try {
-    const response = await fetch(`${endpoint}/${id}`);
+    const response = await fetch(endpoint.concat("/", id));
     const data = await response.json();
     if (response.ok) {
       return data;
@@ -31,11 +28,14 @@ const getOne = async(id) => {
   }
 };
 
-const create = async(newObject) => {
+const create = async (newObject, uid) => {
   try {
     const response = await fetch(endpoint, {
       method: "post",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `UID ${uid}`,
+      },
       body: JSON.stringify(newObject),
     });
     const data = await response.json();
@@ -49,11 +49,14 @@ const create = async(newObject) => {
   }
 };
 
-const update = async (id, newObject) => {
+const update = async (id, newObject, uid) => {
   try {
-    const response = await fetch(`endpoint/${id}`, {
+    const response = await fetch(endpoint.concat("/", id), {
       method: "put",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `UID ${uid}`,
+      },
       body: JSON.stringify(newObject),
     });
     const data = await response.json();
@@ -67,13 +70,18 @@ const update = async (id, newObject) => {
   }
 };
 
-const deleteBlog = async (id) => {
+const deleteBlog = async (id, uid) => {
   try {
-    const response = await fetch(`endpoint/${id}`, {
+    const response = await fetch(endpoint.concat("/", id), {
       method: "delete",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `UID ${uid}`,
+      },
     });
     const data = await response.json();
     if (response.ok) {
+      console.log(data);
       return data;
     } else {
       throw new Error("Server Error ", data.error.message);

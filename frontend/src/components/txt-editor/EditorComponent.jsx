@@ -1,13 +1,15 @@
 import { Editor } from "@tinymce/tinymce-react";
 
-function EditorComponent({ input, handleEditor,setIsLoading }) {
+function EditorComponent({ input, handleEditor }) {
+
+  
  
   return (
     <Editor
       apiKey="rfvabu9tkel58kg3a1obhmpzlfitavaxdbjw5dlmo3u28cpz"
       value={input.body}
       menu={true}
-      onInit={()=>{setIsLoading(false)}}
+      //onInit={()=>{setIsLoading(false);}}
       onEditorChange={(newValue) => handleEditor(newValue)}
       init={{
         height: 300,

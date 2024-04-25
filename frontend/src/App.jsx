@@ -30,8 +30,13 @@ function App() {
       });
   }, []);
 
-  const deletePost = (id) => {
-    setBlogs((prevState) => prevState.filter((t) => t.id != id));
+  const deletePost = async (id, uid) => {
+    try {
+      await blogService.deleteBlog(id, uid);
+      setBlogs((prevState) => prevState.filter((t) => t.id != id));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const addBlog = (blog) => {

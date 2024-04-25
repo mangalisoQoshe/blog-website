@@ -74,19 +74,19 @@ func (b BlogModel) Get(id primitive.ObjectID) (*Blog, error) {
 	return &blog, nil
 }
 
-// not functional, i don't know why
+
 func (b BlogModel) Update(blog *Blog) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	filter := bson.M{"_id": blog.ID}
-	update := bson.M{"$set": bson.M{"title": blog.Title, "body": blog.Body, "createdAt": blog.CreatedAt, "updatedAt": blog.UpdatedAt, "brief": blog.Brief, "tags": blog.Tags, "version": blog.Version}}
-	res, err := b.BlogsCollection.UpdateOne(ctx, filter, update)
+	update := bson.M{"$set": bson.M{"title": blog.Title, "body": blog.Body, "createdAt": blog.CreatedAt, "updatedAt": blog.UpdatedAt, "brief": blog.Brief, "tags": blog.Tags, "version": blog.Version + 1 }}
+	_, err := b.BlogsCollection.UpdateOne(ctx, filter, update)
 	if err != nil {
 		return err
 	}
 
-	log.Println(res.MatchedCount, res.ModifiedCount, res.UpsertedCount)
+	
 
 	return err
 }
@@ -95,6 +95,7 @@ func (b BlogModel) Delete(id primitive.ObjectID) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	result, err := b.BlogsCollection.DeleteOne(ctx, bson.M{"_id": id})
+	log.Println(result.DeletedCount)
 	if result.DeletedCount == 0 {
 		return errors.New("product not found")
 	}

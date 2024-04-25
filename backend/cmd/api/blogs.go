@@ -77,7 +77,7 @@ func (app *application) showBlogHandler(w http.ResponseWriter, r *http.Request) 
 
 	blog, err := app.models.Blogs.Get(objId)
 	if err != nil {
-		app.serverErrorResponse(w, r, err)
+		app.notFoundResponse(w, r)
 		return
 	}
 
@@ -146,7 +146,7 @@ func (app *application) updateBlogHandler(w http.ResponseWriter, r *http.Request
 		CreatedAt: input.CreatedAt,
 		UpdatedAt: time.Now(),
 		Brief:     input.Body,
-		Version:   input.Version + 1,
+		Version:   input.Version,
 	}
 
 	err = app.models.Blogs.Update(blog)
@@ -180,11 +180,11 @@ func (app *application) deleteBlogByIDHandler(w http.ResponseWriter, r *http.Req
 
 	err = app.models.Blogs.Delete(objId)
 	if err != nil {
-		app.serverErrorResponse(w, r, err)
+		app.notFoundResponse(w, r)
 		return
 	}
 
-	err = app.writeJSON(w, http.StatusOK, envelope{"message": "movie successfully deleted"}, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"message": "blog successfully deleted"}, nil)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
