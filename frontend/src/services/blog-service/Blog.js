@@ -7,10 +7,10 @@ const getAll = async () => {
     if (response.ok) {
       return data;
     } else {
-      throw new Error("Server Error ", data.error.message);
+      throw new Error(data.message);
     }
   } catch (err) {
-    throw new Error("Fetch Error: " + err);
+    throw new Error("Failed to fetch");
   }
 };
 
@@ -21,10 +21,10 @@ const getOne = async (id) => {
     if (response.ok) {
       return data;
     } else {
-      throw new Error("Server Error ", data.error.message);
+      throw new Error(data.message);
     }
   } catch (err) {
-    throw new Error("Fetch Error: " + err);
+    throw new Error("Failed to fetch");
   }
 };
 
@@ -42,16 +42,16 @@ const create = async (newObject, uid) => {
     if (response.ok) {
       return data;
     } else {
-      throw new Error("Server Error ", data.error.message);
+      throw new Error(data.message);
     }
   } catch (err) {
-    throw new Error("Fetch Error: " + err);
+    throw new Error("Failed to fetch");
   }
 };
 
-const update = async (id, newObject, uid) => {
+const update = async (newObject, uid) => {
   try {
-    const response = await fetch(endpoint.concat("/", id), {
+    const response = await fetch(endpoint.concat("/", newObject.id), {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -63,10 +63,10 @@ const update = async (id, newObject, uid) => {
     if (response.ok) {
       return data;
     } else {
-      throw new Error("Server Error ", data.error.message);
+      throw new Error(data.message);
     }
   } catch (err) {
-    throw new Error("Fetch Error: " + err);
+    throw new Error("Failed to fetch");
   }
 };
 
@@ -81,13 +81,12 @@ const deleteBlog = async (id, uid) => {
     });
     const data = await response.json();
     if (response.ok) {
-      console.log(data);
       return data;
     } else {
-      throw new Error("Server Error ", data.error.message);
+      throw new Error(data.message);
     }
   } catch (err) {
-    throw new Error("Fetch Error: " + err);
+    throw new Error("Failed to fetch");
   }
 };
 

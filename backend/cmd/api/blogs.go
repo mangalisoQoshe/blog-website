@@ -106,7 +106,7 @@ func (app *application) showBlogsHandler(w http.ResponseWriter, r *http.Request)
 
 func (app *application) updateBlogHandler(w http.ResponseWriter, r *http.Request) {
 
-	var input data.CreateBlog
+	var input data.Blog
 	err := app.readJSON(w, r, &input)
 	if err != nil {
 		app.badRequestResponse(w, r, err)
@@ -118,7 +118,7 @@ func (app *application) updateBlogHandler(w http.ResponseWriter, r *http.Request
 	// Use the Valid() method to see if any of the checks failed. If they did, then use
 	// the failedValidationResponse() helper to send a response to the client, passing
 	// in the v.Errors map.
-	if data.ValidateBlog(v, &input); !v.Valid() {
+	if data.ValidateEditedBlog(v, &input); !v.Valid() {
 		app.failedValidationResponse(w, r, v.Errors)
 		return
 	}

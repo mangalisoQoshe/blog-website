@@ -1,7 +1,7 @@
-import CreatePost from "../create-post/CreatePost";
+import CreatePost from "../create-blog/CreateBlog";
 
-function EditBlog({ addBlog }) {
-  return <CreatePost addBlog={addBlog} />;
+function EditBlog({ updateBlog }) {
+  return <CreatePost insertBlog={updateBlog} />;
 }
 
-export default EditBlog
+export default EditBlog;

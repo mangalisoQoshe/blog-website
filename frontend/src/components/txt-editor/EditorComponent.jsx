@@ -1,16 +1,18 @@
 import { Editor } from "@tinymce/tinymce-react";
 
 function EditorComponent({ input, handleEditor }) {
-
   
- 
+  const API_KEY = import.meta.env.VITE_REACT_APP_RICH_TXT_EDITOR_API_KEY;
+
   return (
     <Editor
-      apiKey="rfvabu9tkel58kg3a1obhmpzlfitavaxdbjw5dlmo3u28cpz"
+      apiKey={API_KEY}
       value={input.body}
       menu={true}
       //onInit={()=>{setIsLoading(false);}}
-      onEditorChange={(newValue) => handleEditor(newValue)}
+      onEditorChange={(newValue, editor) => {
+        handleEditor(editor.getContent({ format: "text" }));
+      }}
       init={{
         height: 300,
         plugins: [

@@ -3,7 +3,9 @@ import styles from "./CreatePost.module.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function CreatePost({ addBlog }) {
+//insertBlog: can either be updateBlog or createBlog function depending
+//on which component invoked createBlog
+function CreateBlog({ insertBlog }) {
   const [input, setInput] = useState({
     title: "",
     brief: "",
@@ -20,7 +22,7 @@ function CreatePost({ addBlog }) {
   useEffect(() => {
     if (location.state) {
       setInput({ ...location.state });
-      setTagList([...location.state.tags])
+      setTagList([...location.state.tags]);
     }
   }, []);
 
@@ -39,20 +41,27 @@ function CreatePost({ addBlog }) {
 
   const handleFormSubmitBtn = (e) => {
     e.preventDefault();
-    //will finish later
-    //generate id
-    const id = Math.ceil(Math.random() * 1000);
 
-    addBlog({
-      id: id,
-      tags: [...tagList],
-      brief: input.brief,
-      title: input.title,
-      body: input.body,
-      publishDate: new Date().toDateString(),
-    });
+    //call addblog if the component was called from createblog
+    //or updateblog it it was called from editblog
+    if (location.state === null) {
+      insertBlog({
+        tags: [...tagList],
+        brief: input.brief,
+        title: input.title,
+        body: input.body,
+      });
+    } else {
+      insertBlog({
+        ...location.state,
+        tags: [...tagList],
+        brief: input.brief,
+        title: input.title,
+        body: input.body,
+      });
+    }
 
-    navigate(`/blog/${input.id}`);
+    navigate("/blog/");
   };
 
   const handleAddTagBtn = (e) => {
@@ -66,7 +75,9 @@ function CreatePost({ addBlog }) {
     setTagList((prevState) => prevState.filter((t) => t != id));
   };
 
-  const loadingEditorComponent =  <EditorComponent input={input} handleEditor={handleEditor}  />
+  const loadingEditorComponent = (
+    <EditorComponent input={input} handleEditor={handleEditor} />
+  );
 
   //if(isLoading) return <Spinner/>
 
@@ -125,12 +136,10 @@ function CreatePost({ addBlog }) {
           </ul>
         </div>
       </div>
-      <div>
-       {loadingEditorComponent}
-      </div>
+      <div>{loadingEditorComponent}</div>
       <button type="submit">Post</button>
     </form>
   );
 }
 
-export default CreatePost;
+export default CreateBlog;

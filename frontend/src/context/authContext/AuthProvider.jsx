@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 
 function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

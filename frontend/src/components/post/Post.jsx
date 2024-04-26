@@ -2,7 +2,7 @@ import useAuth from "../../context/authContext/useAuth";
 import styles from "./Post.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
-function Post({ blog, deletePost }) {
+function Post({ blog, deleteBlog }) {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
@@ -16,13 +16,13 @@ function Post({ blog, deletePost }) {
         <div className={styles.content}>
           <h2>{blog.title}</h2>
           <p className={styles.date}>{(new Date(blog.createdAt.slice(0,10))).toDateString()}</p>
-          <div>{blog.tags.map((tag) => tag)}</div>
+          <div>{blog.tags.map((tag) => tag.concat(" "))}</div>
           <p>{blog.brief}</p>
         </div>
       </Link>
       {currentUser ? (
         <span>
-          <button onClick={() => deletePost(blog.id,currentUser.uid)}>delete</button>
+          <button onClick={() => deleteBlog(blog.id)}>delete</button>
           <button onClick={handleEditBtn}>edit</button>
         </span>
       ) : null}

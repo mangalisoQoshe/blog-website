@@ -22,21 +22,28 @@ function PostDetails() {
 
   }
 
-  //const publishDate = new Date(post.createdAt)
-  //console.log(post.createdAt)
  
   return (
     <>
       <button onClick={handleBackBtn}>Back</button>
       {post ? (
         <div>
-          <h2>Publish Date {(new Date(post.createdAt.slice(0,10))).toDateString()}</h2>
+          <h2>
+            Publish Date {new Date(post.createdAt.slice(0, 10)).toDateString()}
+          </h2>
+         {post.version > 0 ? (<h2>
+            Edited on {new Date(post.updatedAt.slice(0, 10)).toDateString()}
+          </h2>) : ""}
           <h2>{post.title}</h2>
           <p>{post.body}</p>
-          <p>{(post.tags).map((tag)=>{return tag})}</p>
+          <p>
+            {post.tags.map((tag) => {
+              return tag;
+            })}
+          </p>
         </div>
       ) : (
-        <Spinner/>
+        <Spinner />
       )}
     </>
   );
