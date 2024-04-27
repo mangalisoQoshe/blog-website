@@ -1,0 +1,8 @@
+.content:first-of-type::first-letter{
+    float: left;
+    font-family: "Noto Serif Display", serif;
+    font-size: 6rem;
+    line-height: 5rem;
+    margin: 2px 8px 0 0;
+
+}

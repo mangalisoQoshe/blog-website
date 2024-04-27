@@ -19,7 +19,7 @@ function Home() {
           maxime! Sit quod aut distinctio!
         </p>
       </div>
-      <img src="sam1.jpg" alt="My picture" className={styles["profile-pic"]} />
+      <img src="default-pp.svg" alt="My picture" className={styles["profile-pic"]} />
       <div className={styles.icons}>
         <a href="http://">
           <LinkedinIcon />

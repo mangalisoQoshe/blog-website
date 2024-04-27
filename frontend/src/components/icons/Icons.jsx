@@ -114,4 +114,56 @@ const AlertTriangle = () => {
   );
 };
 
-export { MoonIcon, SunIcon, InstagramIcon, LinkedinIcon, AlertTriangle };
+const UserCircle=()=>{
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-user-circle"
+        width="44"
+        height="44"
+        viewBox="0 0 24 24"
+        strokeWidth="1.5"
+        stroke="#000000"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+        <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+        <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+      </svg>
+    );
+}
+
+const ArrowLeft=()=>{
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-arrow-left"
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="#000000"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M5 12l14 0" />
+      <path d="M5 12l6 6" />
+      <path d="M5 12l6 -6" />
+    </svg>
+  );
+}
+
+export {
+  MoonIcon,
+  SunIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  AlertTriangle,
+  UserCircle,
+  ArrowLeft,
+};

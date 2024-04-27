@@ -2,8 +2,13 @@ import styles from "./Blog.module.css";
 
 import Post from "../../components/post/Post";
 import ErrorMsg from "./ErrorMsg";
+import Spinner from "../../components/spinner/Spinner";
 
 function Blog({ blogs, deleteBlog, errorMessage }) {
+  if (blogs.length === 0 && errorMessage === null) {
+    return <Spinner />;
+  }
+
   return (
     <div>
       {errorMessage !== null ? (

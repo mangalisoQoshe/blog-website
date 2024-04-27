@@ -25,6 +25,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState(null); //handles error message display for the blog component
   const [notify, setNotify] = useState({ message: "", level: "" });
 
+
   useEffect(() => {
     blogService
       .getAll()
@@ -37,6 +38,8 @@ function App() {
         setErrorMessage("Ooops! Something went wrong. Please try again later.");
       });
   }, []);
+
+  
 
   const deleteBlog = async (id) => {
     try {
@@ -88,6 +91,8 @@ function App() {
     }
   };
 
+
+
   return (
     <div className="container">
       <Router>
@@ -123,7 +128,10 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="/blog/:id" element={<PostDetails />} />
+          <Route
+            path="/blog/:id"
+            element={<PostDetails blogs={blogs} errorMessage={errorMessage} deleteBlog={deleteBlog} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
