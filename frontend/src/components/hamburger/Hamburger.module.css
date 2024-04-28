@@ -1,0 +1,34 @@
+/* HamburgerButton.css */
+.hamburger-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 24px;
+  width: 24px;
+}
+
+.line {
+  background-color: #333;
+  height: 2px;
+  width: 100%;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.open:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.open:nth-child(2) {
+  opacity: 0;
+}
+
+.open:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+.menu {
+  /* Your menu styles */
+}

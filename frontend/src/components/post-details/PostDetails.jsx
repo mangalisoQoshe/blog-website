@@ -4,9 +4,9 @@ import Spinner from "../spinner/Spinner";
 import ErrorMsg from "../../pages/blog/ErrorMsg";
 import { ArrowLeft } from "../icons/Icons";
 import Post from "../post/Post";
-import styles from "./PostDetails.module.css"
+import styles from "./PostDetails.module.css";
 
-function PostDetails({ blogs, errorMessage,deleteBlog }) {
+function PostDetails({ blogs, errorMessage, deleteBlog }) {
   const [post, setPost] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function PostDetails({ blogs, errorMessage,deleteBlog }) {
   useEffect(() => {
     const obj = blogs.find((b) => b.id === id);
     setPost(obj);
-  }, [blogs,post,id]);
+  }, [blogs, post, id]);
 
   const handleBackBtn = () => {
     navigate("/blog");
@@ -29,12 +29,10 @@ function PostDetails({ blogs, errorMessage,deleteBlog }) {
   }
 
   const filteredList = blogs.filter((blog) => {
-    return post.tags.some((tag) => blog.tags.includes(tag) && blog.id !== post.id);
+    return post.tags.some(
+      (tag) => blog.tags.includes(tag) && blog.id !== post.id
+    );
   });
-
-//  const filteredBlogs =  filteredList.filter((b) => b.id !== id);
-
-
 
   return (
     <>

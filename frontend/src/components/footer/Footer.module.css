@@ -1,0 +1,44 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.footer > p {
+  position: absolute;
+  bottom: 0;
+}
+
+@media (max-width: 684px) {
+  .footer {
+    position: absolute;
+    bottom: -180px;
+
+  }
+
+  .footer > p {
+    position: relative;
+    
+    
+  }
+}
+@media (max-width:379px) {
+     .footer{
+          position: absolute;
+          bottom:-300px
+     }
+}
+
+@media (max-width:376px) {
+     .footer{
+          position: absolute;
+          bottom:-330px
+     }
+}
+
+@media (max-width:356px) {
+     .footer{
+          position: absolute;
+          bottom:-240px
+     }
+}

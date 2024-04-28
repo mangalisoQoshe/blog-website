@@ -18,6 +18,7 @@ import RequireAuth from "./components/require-auth/RequireAuth";
 import EditBlog from "./pages/edit-blog/EditBlog";
 import useAuth from "./context/authContext/useAuth";
 import Notification from "./components/notification/Notification";
+import Footer from "./components/footer/Footer";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
@@ -134,6 +135,7 @@ function App() {
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer/>
       </Router>
     </div>
   );

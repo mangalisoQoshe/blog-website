@@ -1,11 +1,138 @@
 .nav {
   padding-block: 1rem;
   display: flex;
+  align-items: center;
+  height: 20%;
+  margin-bottom: 3rem;
+}
+
+.stuff {
+
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 50%;
 }
 
 .link {
   color: black;
   font-size: 1.5rem;
+}
+
+.logo {
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2rem;
+  color: black;
+  width: 50%;
+}
+
+/* .hamburger {
+  display: none;
+  cursor: pointer;
+  padding: 0.8rem;
+  
+}
+.bar {
+  display: block;
+  width: 1.36rem;
+  height: 0.1475rem;
+  margin: 0.3125rem auto;
+  background-color: black;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger:hover {
+  cursor: pointer;
+}
+
+@media (max-width:4337px) {
+  .logo{
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 488px) {
+  .stuff {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+    margin-left: auto;
+  }
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  .stuff.active {
+    display: flex;
+    position: fixed;
+    color: white;
+    top: 0px;
+    left: 0.1px;
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    background-color: #29305fbe;
+    overflow: hidden;
+    transition: 0.3s;
+  }
+
+  .stuff.active .nav-list {
+    display: block;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+    width: 90vw;
+    margin-top: 7rem;
+    border-bottom: 0.1rem;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    border-style: solid;
+    border-color: white;
+  }
+
+  .stuff.active .navList-link {
+    border-style: solid;
+    border-color: white;
+    border-width: 0.1rem;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    padding: 1.5rem 0.1rem;
+  }
+
+  .stuff.active .navList-item {
+    color: white;
+  }
+
+  .stuff.active .navList-btn {
+    background-color: transparent;
+    border-color: white;
+    border-width: 0.2rem;
+    padding: 1rem 9rem;
+    font-weight: var(--fw-md);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+} */
+
+@media (max-width: 684px) {
+  .nav {
+    margin-bottom: 2rem;
+  }
 }

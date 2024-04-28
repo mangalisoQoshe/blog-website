@@ -1,16 +1,89 @@
 .home {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.1fr;
+  grid-template-columns: 1.3fr 0.5fr;
+  height: 400px;
+}
+
+.intro {
+  position: relative;
+}
+
+.profile-pic-containter {
+  width: 300px;
+  height: 400px;
+  border: 1px solid rgb(59, 54, 54);
+  border-radius: 0.5rem;
+  box-shadow: -3px 2.5px 8px black;
 }
 
 .profile-pic {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
 }
 
-.icons {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-evenly;
+.greetings {
+  font-size: 4rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.welcome {
+  margin-bottom: 1.2rem;
+}
+
+.social-media-links {
+  margin-top: 2rem;
+}
+
+.qualification {
+  border: 1px solid black;
+  border-right: none;
+  padding-block: 0.5rem;
+  padding-left: 0.5rem;
+  border-radius: 0.5rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  position: absolute;
+  display: block;
+  bottom: 0;
+  width: 100%;
+  font-family: "Noto Sans Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 440;
+  font-style: normal;
+  font-variation-settings: 100;
+}
+
+@media (max-width: 957px) {
+  .greetings {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 809px) {
+  .greetings {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 684px) {
+  .home {
+    display: block;
+    text-align: center;
+  }
+
+  .profile-pic-containter {
+    height: 350px;
+    margin-block: 2.3rem;
+    margin-inline: auto;
+  }
+
+  .qualification {
+    position: absolute;
+    bottom: -500px;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border: 1px solid black;
+    margin-bottom: 1rem;
+  }
 }
