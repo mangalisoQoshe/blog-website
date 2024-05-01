@@ -17,18 +17,24 @@
   transition: transform 0.3s, opacity 0.3s;
 }
 
-.open:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
+.hamburger-menu {
+  display: none;
 }
 
-.open:nth-child(2) {
-  opacity: 0;
-}
+@media (max-width: 527px) {
+  .hamburger-menu {
+    display: block;
+    margin-left: auto;
+  }
+  .hamburger-button.open .line:nth-child(2) {
+    opacity: 0;
+  }
 
-.open:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
-}
+  .hamburger-button.open .line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
 
-.menu {
-  /* Your menu styles */
+  .hamburger-button.open .line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
 }

@@ -6,8 +6,7 @@
   margin-bottom: 3rem;
 }
 
-.stuff {
-
+.menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,6 +25,16 @@
   font-size: 2rem;
   color: black;
   width: 50%;
+}
+
+@media (max-width: 527px) {
+  .menu {
+    display: none;
+  }
+  .menu.open {
+    display: block;
+
+  }
 }
 
 /* .hamburger {
@@ -54,7 +63,7 @@
   }
 }
 
-@media (max-width: 488px) {
+C
   .stuff {
     display: none;
   }
