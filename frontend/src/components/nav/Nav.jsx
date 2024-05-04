@@ -4,7 +4,7 @@ import { useState } from "react";
 
 //component imports
 
-import { MoonIcon } from "../icons/Icons";
+import { MoonIcon, SunIcon } from "../icons/Icons";
 import ActiveLink from "../active-link/ActiveLink";
 import useAuth from "../../context/authContext/useAuth";
 import HamburgerButton from "../hamburger/HamburgerButton";
@@ -12,28 +12,51 @@ import HamburgerButton from "../hamburger/HamburgerButton";
 function Nav() {
   const { currentUser } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen((open) => !open);
   };
 
+  const handleBtnClick = () => {
+    toggleMenu();
+    setClicked((click) => !click);
+    
+  };
+
   return (
     <div className={styles.nav}>
-      <NavLink to="/login" className={styles.logo}>
-        S. Mathangana
-      </NavLink>
+      <div style={{ marginRight: "auto" }}>
+        <NavLink to="/login" className={styles.logo}>
+          S. Mathangana
+        </NavLink>
+      </div>
 
-      <div className={`${styles.menu}${isOpen ? "open" : ""}`}>
-        <ActiveLink to="/">Home</ActiveLink>
-        <ActiveLink to="/blog">Blog</ActiveLink>
+      <div className={`${styles.menu} ${isOpen ? styles.open : ""}`}>
+        <ActiveLink toggleMenu={toggleMenu} to="/">
+          Home
+        </ActiveLink>
+        <ActiveLink toggleMenu={toggleMenu} to="/blog">
+          Blog
+        </ActiveLink>
         {currentUser ? (
-          <NavLink to="/create-blog" className={styles.link}>
+          <NavLink
+            to="/create-blog"
+            className={styles.link}
+            onClick={() => {
+              toggleMenu();
+            }}
+          >
             Create Blog
           </NavLink>
         ) : null}
-
-        <button>
-          <MoonIcon />
+        <button
+          className={styles["color-mode-btn"]}
+          onClick={() => {
+            handleBtnClick()
+          }}
+        >
+          {clicked ? <MoonIcon /> : <SunIcon />}
         </button>
       </div>
       <HamburgerButton isOpen={isOpen} toggleMenu={toggleMenu} />

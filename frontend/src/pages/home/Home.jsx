@@ -10,7 +10,7 @@ function Home() {
             Hi, I&apos;m Samke <span>👋🏼</span>
           </h1>
           <p className={styles.welcome}>Welcome to my personal website!</p>
-          <p style={{"padding-right":"1rem"}}>
+          <p style={{"paddingRight":"1rem"}}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas
             similique provident dolorem quisquam beatae architecto corrupti,
             nesciunt, impedit, quasi ex ipsa error quaerat dolore voluptatibus

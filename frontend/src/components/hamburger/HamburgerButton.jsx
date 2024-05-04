@@ -1,4 +1,4 @@
-import styles from "./Hamburger.module.css"; // Import CSS for styling hamburger button
+import styles from "./HamburgerButton.module.css"; // Import CSS for styling hamburger button
 
 
 const HamburgerButton = ({isOpen,toggleMenu}) => {

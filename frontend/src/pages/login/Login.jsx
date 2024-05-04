@@ -3,6 +3,7 @@ import { useState } from "react";
 import useAuth from "../../context/authContext/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../components/spinner/Spinner";
+import styles from "./Login.module.css"
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -63,35 +64,39 @@ const Login = () => {
 
   console.log(currentUser)
 
-  return  currentUser ? (
-    <button onClick={handleSignOut}>Sign Out</button>
+  return currentUser ? (
+    <button onClick={handleSignOut} className={styles["btn-signout"]}>
+      Sign Out
+    </button>
   ) : (
-    <form onSubmit={handleLogin}>
-      <div className="form_control">
-        <label htmlFor="user-email">Email:</label>
+    <form onSubmit={handleLogin} className={styles.form}>
+      <div className={styles["form-control"]}>
+        <label htmlFor="user-email">Email</label>
         <input
           type="email"
           id="user-email"
           name="email"
+          placeholder="Email"
           aria-describedby="user-email"
           aria-invalid="false"
           required
           onChange={handleInput}
         />
       </div>
-      <div className="form_control">
-        <label htmlFor="password">Password:</label>
+      <div className={styles["form-control"]}>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           id="password"
           name="password"
+          placeholder="Password"
           required
           aria-describedby="user-password"
           aria-invalid="false"
           onChange={handleInput}
         />
       </div>
-      <button disabled={loading} className="btn-submit">
+      <button disabled={loading} className={`btn ${styles["btn-submit"]}`}>
         Login
       </button>
     </form>
