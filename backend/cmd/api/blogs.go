@@ -44,7 +44,7 @@ func (app *application) createBlogHandler(w http.ResponseWriter, r *http.Request
 		Tags:      input.Tags,
 		CreatedAt: input.CreatedAt,
 		Body:      input.Body,
-		Brief:     input.Body,
+		Brief:     input.Brief,
 		Version:   0,
 	}
 
@@ -145,7 +145,7 @@ func (app *application) updateBlogHandler(w http.ResponseWriter, r *http.Request
 		Body:      input.Body,
 		CreatedAt: input.CreatedAt,
 		UpdatedAt: time.Now(),
-		Brief:     input.Body,
+		Brief:     input.Brief,
 		Version:   input.Version,
 	}
 

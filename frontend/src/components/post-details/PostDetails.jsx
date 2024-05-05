@@ -36,37 +36,46 @@ function PostDetails({ blogs, errorMessage, deleteBlog }) {
 
   return (
     <>
-      <button onClick={handleBackBtn}>
-        {" "}
+      <button onClick={handleBackBtn} className={` ${styles["btn-back"]}`}>
         <ArrowLeft /> Go Back
       </button>
-
+      <h2 className={styles.title}>{post.title}</h2>
       <div>
-        <h2>
-          Publish on
-          {new Date(post.createdAt.slice(0, 10)).toDateString().slice(3)}
-        </h2>
-        {post.version > 0 ? (
-          <h2>
-            Last Updated on
-            {new Date(post.updatedAt.slice(0, 10)).toDateString().slice(3)}
-          </h2>
-        ) : (
-          ""
-        )}
-        <h2>{post.title}</h2>
-        <p className={styles.content}>{post.body}</p>
-        <p>
-          {" "}
+        <div className={styles.date}>
+          <p>
+            Publish on
+            {new Date(post.createdAt.slice(0, 10)).toDateString().slice(3)}
+          </p>
+          {post.version > 0 ? (
+            <p>
+              Last Updated on
+              {new Date(post.updatedAt.slice(0, 10)).toDateString().slice(3)}
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
+
+        <div>
+          <p
+            className={styles.content}
+            dangerouslySetInnerHTML={{ __html: post.body }}
+          />
+        </div>
+        <p className={styles.tags}>
           Tags:{" "}
           {post.tags.map((tag) => {
             return tag.concat(" ");
           })}
         </p>
       </div>
-      <div>
-        <img src="/default-pp.svg" alt="My picture" />
-        <h2>Witten by Author's name</h2>
+      <div className={styles["author-info"]}>
+        <img
+          src="/potrait1.jpg"
+          alt="My picture"
+          className={styles["p-picture"]}
+        />
+        <p className={styles["author-name"]}>Witten by Samkelisiwe</p>
         <p>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque
           veniam ipsum hic suscipit, earum, molestiae reprehenderit eum fugit
@@ -76,11 +85,17 @@ function PostDetails({ blogs, errorMessage, deleteBlog }) {
       </div>
       {filteredList.length > 0 ? (
         <div>
-          <h2>If you found this article helpful.</h2>
-          <p>You will love these ones as well.</p>
-          {filteredList.map((blog) => {
-            return <Post key={blog.id} blog={blog} deleteBlog={deleteBlog} />;
-          })}
+          <h2 style={{ marginBottom: "1rem" }}>
+            If you found this article helpful.
+          </h2>
+          <p style={{ marginBottom: "2rem" }}>
+            You will love these ones as well.
+          </p>
+          <div className={styles.posts}>
+            {filteredList.map((blog) => {
+              return <Post key={blog.id} blog={blog} deleteBlog={deleteBlog} />;
+            })}
+          </div>
         </div>
       ) : (
         ""

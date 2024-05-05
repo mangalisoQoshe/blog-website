@@ -42,6 +42,8 @@ function CreateBlog({ insertBlog }) {
   const handleFormSubmitBtn = (e) => {
     e.preventDefault();
 
+    
+
     //call addblog if the component was called from createblog
     //or updateblog it it was called from editblog
     if (location.state === null) {
@@ -103,7 +105,7 @@ function CreateBlog({ insertBlog }) {
             required
             value={input.brief}
             onChange={handleChangeInput}
-            maxLength={300}
+            maxLength={160}
             className={styles["txt-area"]}
           />
         </div>

@@ -2,11 +2,14 @@
   display: grid;
   grid-template-columns: 1.3fr 0.5fr;
   height: 400px;
+  margin-top: 3rem;
 }
 
 .intro {
   position: relative;
 }
+
+
 
 .profile-pic-containter {
   width: 300px;

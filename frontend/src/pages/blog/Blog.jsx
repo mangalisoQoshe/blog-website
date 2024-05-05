@@ -22,6 +22,7 @@ function Blog({ blogs, deleteBlog, errorMessage }) {
               name="searchBar"
               id="searchBar"
               placeholder="Search Posts"
+              className={styles["search-bar"]}
             />
           </form>
           <div className={styles.blogs}>

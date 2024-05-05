@@ -1,6 +1,21 @@
-.blogs{
+.search-bar {
+  margin-block: 1.5rem;
+  width: 250px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 0.4rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 820px) {
+  .blogs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 1rem;
-   
+  }
+
+  .search-bar {
+    width: 400px;
+    height: 50px;
+  }
 }

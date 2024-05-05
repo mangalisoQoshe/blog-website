@@ -1,7 +1,6 @@
 import { Editor } from "@tinymce/tinymce-react";
 
 function EditorComponent({ input, handleEditor }) {
-  
   const API_KEY = import.meta.env.VITE_REACT_APP_RICH_TXT_EDITOR_API_KEY;
 
   return (
@@ -10,8 +9,11 @@ function EditorComponent({ input, handleEditor }) {
       value={input.body}
       menu={true}
       //onInit={()=>{setIsLoading(false);}}
-      onEditorChange={(newValue, editor) => {
-        handleEditor(editor.getContent({ format: "text" }));
+      // onEditorChange={(newValue, editor) => {
+      //   handleEditor(editor.getContent({ format: "text" }));
+      // }}
+      onEditorChange={(newValue) => {
+        handleEditor(newValue);
       }}
       init={{
         height: 300,

@@ -1,4 +1,4 @@
-import "./App.css";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import blogService from "./services/blog-service/Blog";
@@ -18,14 +18,13 @@ import RequireAuth from "./components/require-auth/RequireAuth";
 import EditBlog from "./pages/edit-blog/EditBlog";
 import useAuth from "./context/authContext/useAuth";
 import Notification from "./components/notification/Notification";
-import Footer from "./components/footer/Footer";
+// import Footer from "./components/footer/Footer";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
   const { currentUser } = useAuth();
   const [errorMessage, setErrorMessage] = useState(null); //handles error message display for the blog component
   const [notify, setNotify] = useState({ message: "", level: "" });
-
 
   useEffect(() => {
     blogService
@@ -39,8 +38,6 @@ function App() {
         setErrorMessage("Ooops! Something went wrong. Please try again later.");
       });
   }, []);
-
-  
 
   const deleteBlog = async (id) => {
     try {
@@ -80,6 +77,7 @@ function App() {
       setBlogs((prevState) =>
         prevState.map((b) => (b.id === blog.id ? response.blog : b))
       );
+
       setNotify({ message: "Blog updated successfully", level: "success" });
       setTimeout(() => {
         setNotify({ message: "", level: "" });
@@ -91,8 +89,6 @@ function App() {
       }, 5000);
     }
   };
-
-
 
   return (
     <div className="container">
@@ -131,11 +127,17 @@ function App() {
           />
           <Route
             path="/blog/:id"
-            element={<PostDetails blogs={blogs} errorMessage={errorMessage} deleteBlog={deleteBlog} />}
+            element={
+              <PostDetails
+                blogs={blogs}
+                errorMessage={errorMessage}
+                deleteBlog={deleteBlog}
+              />
+            }
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer/>
+        {/* <Footer/> */}
       </Router>
     </div>
   );

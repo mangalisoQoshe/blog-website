@@ -65,7 +65,7 @@ const Login = () => {
   console.log(currentUser)
 
   return currentUser ? (
-    <button onClick={handleSignOut} className={styles["btn-signout"]}>
+    <button onClick={handleSignOut} className={`btn ${styles["btn-signout"]}`}>
       Sign Out
     </button>
   ) : (

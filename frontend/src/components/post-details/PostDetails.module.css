@@ -1,8 +1,78 @@
-.content:first-of-type::first-letter{
-    float: left;
-    font-family: "Noto Serif Display", serif;
-    font-size: 6rem;
-    line-height: 5rem;
-    margin: 2px 8px 0 0;
+.content:first-of-type::first-letter {
+  float: left;
+  font-family: "Noto Serif Display", serif;
+  font-size: 6rem;
+  line-height: 5rem;
+  margin: 2px 8px 0 0;
+}
 
+.btn-back {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border: none;
+  background-color: transparent;
+}
+
+.title {
+  margin-top: 1rem;
+  font-size: 30px;
+}
+
+.date {
+  margin-block: 1.3rem 3rem;
+}
+
+.content {
+  line-height: 30px;
+  font-size: 18px;
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
+  word-break: break-word;
+  max-width: 700px;
+  margin-inline: auto;
+}
+.tags {
+  margin-block: 2rem;
+}
+
+.author-info {
+  border-block: 1px solid black;
+  padding-block: 5rem;
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.p-picture {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 270px;
+  height: 270px;
+  margin-inline: auto;
+}
+
+.author-name {
+  font-size: 24px;
+  font-weight: 450;
+
+  margin-block: 1rem;
+}
+@media (min-width: 820px) {
+  .title {
+    font-size: 40px;
+    font-weight: 550;
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .date {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .posts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+  }
 }
