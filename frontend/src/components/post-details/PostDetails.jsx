@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Spinner from "../spinner/Spinner";
 import ErrorMsg from "../../pages/blog/ErrorMsg";
-import { ArrowLeft } from "../icons/Icons";
+import { ArrowLeft,InstagramIcon,LinkedinIcon } from "../icons/Icons";
 import Post from "../post/Post";
 import styles from "./PostDetails.module.css";
 
@@ -15,6 +15,10 @@ function PostDetails({ blogs, errorMessage, deleteBlog }) {
     const obj = blogs.find((b) => b.id === id);
     setPost(obj);
   }, [blogs, post, id]);
+
+    useEffect(() => {
+      document.title = post ? post.title:"Loading...";
+    }, [post]);
 
   const handleBackBtn = () => {
     navigate("/blog");
@@ -37,7 +41,8 @@ function PostDetails({ blogs, errorMessage, deleteBlog }) {
   return (
     <>
       <button onClick={handleBackBtn} className={` ${styles["btn-back"]}`}>
-        <ArrowLeft /> Go Back
+        <ArrowLeft />
+        <span style={{ fontSize: "17px", marginLeft: "0.6rem" }}> Go Back</span>
       </button>
       <h2 className={styles.title}>{post.title}</h2>
       <div>
@@ -75,13 +80,23 @@ function PostDetails({ blogs, errorMessage, deleteBlog }) {
           alt="My picture"
           className={styles["p-picture"]}
         />
-        <p className={styles["author-name"]}>Witten by Samkelisiwe</p>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque
-          veniam ipsum hic suscipit, earum, molestiae reprehenderit eum fugit
-          adipisci quaerat culpa temporibus harum praesentium facere totam
-          aliquid eveniet corporis quibusdam!
-        </p>
+        <div className={styles["author-details"]}>
+          <p className={styles["author-name"]}>Witten by Samkelisiwe</p>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            veniam ipsum hic suscipit, earum, molestiae reprehenderit eum fugit
+            adipisci quaerat culpa temporibus harum praesentium facere totam
+            aliquid eveniet corporis quibusdam!
+          </p>
+          <div className={styles["socials"]}>
+            <button className={styles["btn-insta"]}>
+              <InstagramIcon />
+            </button>
+            <button className={styles["btn-linked"]}>
+              <LinkedinIcon/>
+            </button>
+          </div>
+        </div>
       </div>
       {filteredList.length > 0 ? (
         <div>

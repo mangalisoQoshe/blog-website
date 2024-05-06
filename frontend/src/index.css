@@ -71,8 +71,8 @@ a {
 
   width: min(var(--max-width), 100% - (var(--container-padding) * 2));
   margin-inline: auto;
-  height: 100vh;
-
+  min-height: 100vh;
+  position: relative;
 }
 
 body {
@@ -93,15 +93,14 @@ h6 {
   font-size: 2.5rem;
   font-variation-settings: 100;
 }
-button{
-   cursor: pointer;
+button {
+  cursor: pointer;
 }
 
-.btn { 
+.btn {
   margin-right: 1rem;
-  background-color:transparent;
+  background-color: transparent;
   padding: 0.4rem 0.7rem;
   border: 1px solid black;
   border-radius: 0.3rem;
 }
-

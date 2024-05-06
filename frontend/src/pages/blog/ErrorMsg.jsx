@@ -2,9 +2,11 @@ import { AlertTriangle } from "../../components/icons/Icons";
 
 function ErrorMsg({ message }) {
   return (
-    <div>
+    <div style={{"display":"flex",    
+    "alignItems": "center",
+    "flexDirection": "column","paddingTop":"3rem"}}>
         <AlertTriangle/>
-      <h1>{message}</h1>
+      <h2 style={{"textAlign":"center","marginTop":"3rem"}}>{message}</h2>
     </div>
   );
 }

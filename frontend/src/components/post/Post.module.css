@@ -2,7 +2,7 @@
   border: 0.1rem solid rgb(191, 45, 45);
   border-radius: 0.4rem;
   padding: 0.3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .title {
@@ -13,15 +13,15 @@
 
 .date {
   display: flex;
-  align-items:center;
+  align-items: center;
   margin-right: 1rem;
 }
 
 .brief {
   font-size: 1rem;
-  margin-top:0.3rem ;
+  margin-top: 0.3rem;
 }
-.description{
+.description {
   display: flex;
   font-size: 14px;
   font-weight: 450;
@@ -29,5 +29,8 @@
 @media (min-width: 820px) {
   .title {
     font-size: 30px;
+  }
+  .blog-post {
+    margin-bottom: 0rem;
   }
 }

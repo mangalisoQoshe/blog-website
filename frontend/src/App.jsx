@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import blogService from "./services/blog-service/Blog";
@@ -18,7 +17,7 @@ import RequireAuth from "./components/require-auth/RequireAuth";
 import EditBlog from "./pages/edit-blog/EditBlog";
 import useAuth from "./context/authContext/useAuth";
 import Notification from "./components/notification/Notification";
-// import Footer from "./components/footer/Footer";
+import Footer from "./components/footer/Footer";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
@@ -97,7 +96,7 @@ function App() {
         <Notification notify={notify} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setNotify={setNotify} />} />
           <Route
             path="/blog"
             element={
@@ -137,7 +136,7 @@ function App() {
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {/* <Footer/> */}
+        <Footer/> 
       </Router>
     </div>
   );

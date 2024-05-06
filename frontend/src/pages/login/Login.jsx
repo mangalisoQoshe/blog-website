@@ -3,19 +3,17 @@ import { useState } from "react";
 import useAuth from "../../context/authContext/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../components/spinner/Spinner";
-import styles from "./Login.module.css"
+import styles from "./Login.module.css";
 
-const Login = () => {
+const Login = ({ setNotify }) => {
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
 
-
-
   const [loading, setLoading] = useState(false);
 
-  const { login, logout, currentUser,isLoading } = useAuth();
+  const { login, logout, currentUser, isLoading } = useAuth();
 
   const { state } = useLocation();
 
@@ -32,37 +30,41 @@ const Login = () => {
       setLoading(true);
       await login(input.email, input.password);
       console.log("Logged in successfully");
+      setNotify({ message: "", level: "" });
       navigate((state && state.path) || "/blog");
     } catch (error) {
-      console.log(error);
+      setNotify({ message: error.message, level: "error" });
+      setTimeout(() => {
+        setNotify({ message: "", level: "" });
+      }, 5000);
     }
     setLoading(false);
   };
 
   const handleInput = (e) => {
     const { name, value } = e.target;
-  
+
     setInput((prev) => ({
       ...prev,
       [name]: value,
     }));
-
-    console.log(input)
   };
 
   const handleSignOut = async () => {
     try {
       await logout();
       console.log("signed out successfully");
+      setNotify({ message: "", level: "" });
       navigate("/");
     } catch (error) {
-      console.log(error);
+      setNotify({ message: error.message, level: "error" });
+      setTimeout(() => {
+        setNotify({ message: "", level: "" });
+      }, 5000);
     }
   };
 
-  if(isLoading) return <Spinner/>
-
-  console.log(currentUser)
+  if (isLoading) return <Spinner />;
 
   return currentUser ? (
     <button onClick={handleSignOut} className={`btn ${styles["btn-signout"]}`}>
@@ -70,6 +72,7 @@ const Login = () => {
     </button>
   ) : (
     <form onSubmit={handleLogin} className={styles.form}>
+      <div></div>
       <div className={styles["form-control"]}>
         <label htmlFor="user-email">Email</label>
         <input

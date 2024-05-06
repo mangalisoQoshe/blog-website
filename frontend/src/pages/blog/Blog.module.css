@@ -1,3 +1,6 @@
+.container {
+  padding-bottom: 2rem;
+}
 .search-bar {
   margin-block: 1.5rem;
   width: 250px;
