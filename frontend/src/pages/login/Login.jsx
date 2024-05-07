@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import PropTypes from "prop-types";
 import useAuth from "../../context/authContext/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../components/spinner/Spinner";
@@ -105,5 +105,9 @@ const Login = ({ setNotify }) => {
     </form>
   );
 };
+
+Login.propTypes ={
+  setNotify:PropTypes.func.isRequired
+}
 
 export default Login;

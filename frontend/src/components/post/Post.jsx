@@ -2,6 +2,7 @@ import useAuth from "../../context/authContext/useAuth";
 import styles from "./Post.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { CalenderIcon,TagIcon } from "../icons/Icons";
+import PropTypes from "prop-types";
 
 function Post({ blog, deleteBlog }) {
   const navigate = useNavigate();
@@ -49,6 +50,11 @@ function Post({ blog, deleteBlog }) {
       ) : null}
     </div>
   );
+}
+
+Post.propTypes ={
+  blog:PropTypes.object.isRequired,
+  deleteBlog:PropTypes.func.isRequired
 }
 
 export default Post;

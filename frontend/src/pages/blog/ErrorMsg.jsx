@@ -1,4 +1,6 @@
 import { AlertTriangle } from "../../components/icons/Icons";
+import PropTypes from "prop-types";
+
 
 function ErrorMsg({ message }) {
   return (
@@ -9,6 +11,10 @@ function ErrorMsg({ message }) {
       <h2 style={{"textAlign":"center","marginTop":"3rem"}}>{message}</h2>
     </div>
   );
+}
+
+ErrorMsg.propTypes ={
+  message: PropTypes.string.isRequired
 }
 
 export default ErrorMsg;

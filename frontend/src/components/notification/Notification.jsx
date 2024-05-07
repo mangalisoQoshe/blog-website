@@ -1,4 +1,5 @@
 import styles from "./Notification.module.css";
+import PropTypes from "prop-types";
 
 function Notification({ notify }) {
   switch (notify.level) {
@@ -12,5 +13,9 @@ function Notification({ notify }) {
       return null;
   }
 }
+
+Notification.propTypes ={
+  notify:PropTypes.object.isRequired
+} 
 
 export default Notification;

@@ -2,6 +2,7 @@ import EditorComponent from "../../components/txt-editor/EditorComponent";
 import styles from "./CreatePost.module.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 //insertBlog: can either be updateBlog or createBlog function depending
 //on which component invoked createBlog
@@ -142,6 +143,10 @@ function CreateBlog({ insertBlog }) {
       <button type="submit">Post</button>
     </form>
   );
+}
+
+CreateBlog.propTypes ={
+  insertBlog:PropTypes.func.isRequired
 }
 
 export default CreateBlog;

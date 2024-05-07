@@ -1,4 +1,5 @@
 import { Editor } from "@tinymce/tinymce-react";
+import PropTypes from "prop-types";
 
 function EditorComponent({ input, handleEditor }) {
   const API_KEY = import.meta.env.VITE_REACT_APP_RICH_TXT_EDITOR_API_KEY;
@@ -47,6 +48,11 @@ function EditorComponent({ input, handleEditor }) {
       }}
     />
   );
+}
+
+EditorComponent.propTypes = {
+  input: PropTypes.object.isRequired,
+  handleEditor:PropTypes.func.isRequired
 }
 
 export default EditorComponent;

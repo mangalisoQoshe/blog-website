@@ -3,13 +3,14 @@ import Post from "../../components/post/Post";
 import ErrorMsg from "./ErrorMsg";
 import Spinner from "../../components/spinner/Spinner";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 function Blog({ blogs, deleteBlog, errorMessage }) {
   const [filteredText, setFilteredText] = useState("");
   const [blogList, setBlogList] = useState([]);
 
   useEffect(() => {
-    document.title = "Samke's Blog"; // Set title based on pathname
+    document.title = "Samke's Blog"; 
   }, []);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ function Blog({ blogs, deleteBlog, errorMessage }) {
       blog.title.toLowerCase().includes(filteredText.toLowerCase())
     );
     setBlogList(filteredItems);
-  }, [blogs, filteredText]); // Only re-run this effect when blogs or filteredText change
+  }, [blogs, filteredText]); 
 
   if (blogs.length === 0 && errorMessage === null) {
     return <Spinner />;
@@ -64,5 +65,11 @@ function Blog({ blogs, deleteBlog, errorMessage }) {
     </div>
   );
 }
+
+Blog.propTypes = {
+  blogs: PropTypes.array.isRequired,
+  deleteBlog: PropTypes.func.isRequired,
+  errorMessage:PropTypes.string
+};
 
 export default Blog;

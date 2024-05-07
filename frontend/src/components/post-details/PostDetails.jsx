@@ -2,9 +2,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Spinner from "../spinner/Spinner";
 import ErrorMsg from "../../pages/blog/ErrorMsg";
-import { ArrowLeft,InstagramIcon,LinkedinIcon } from "../icons/Icons";
+import { ArrowLeft, InstagramIcon, LinkedinIcon } from "../icons/Icons";
 import Post from "../post/Post";
 import styles from "./PostDetails.module.css";
+import PropTypes from "prop-types";
 
 function PostDetails({ blogs, errorMessage, deleteBlog }) {
   const [post, setPost] = useState(null);
@@ -16,9 +17,9 @@ function PostDetails({ blogs, errorMessage, deleteBlog }) {
     setPost(obj);
   }, [blogs, post, id]);
 
-    useEffect(() => {
-      document.title = post ? post.title:"Loading...";
-    }, [post]);
+  useEffect(() => {
+    document.title = post ? post.title : "Loading...";
+  }, [post]);
 
   const handleBackBtn = () => {
     navigate("/blog");
@@ -93,7 +94,7 @@ function PostDetails({ blogs, errorMessage, deleteBlog }) {
               <InstagramIcon />
             </button>
             <button className={styles["btn-linked"]}>
-              <LinkedinIcon/>
+              <LinkedinIcon />
             </button>
           </div>
         </div>
@@ -118,5 +119,11 @@ function PostDetails({ blogs, errorMessage, deleteBlog }) {
     </>
   );
 }
+
+PostDetails.propTypes = {
+  blogs: PropTypes.array.isRequired,
+  errorMessage: PropTypes.string,
+  deleteBlog: PropTypes.func.isRequired,
+};
 
 export default PostDetails;

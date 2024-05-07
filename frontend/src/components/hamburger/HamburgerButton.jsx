@@ -1,5 +1,5 @@
 import styles from "./HamburgerButton.module.css"; // Import CSS for styling hamburger button
-
+import PropTypes from "prop-types";
 
 const HamburgerButton = ({isOpen,toggleMenu}) => {
 
@@ -17,6 +17,11 @@ const HamburgerButton = ({isOpen,toggleMenu}) => {
     </div>
   );
 };
+
+HamburgerButton.propTypes ={
+  isOpen:PropTypes.bool.isRequired,
+  toggleMenu:PropTypes.func.isRequired
+}
 
 export default HamburgerButton;
 
