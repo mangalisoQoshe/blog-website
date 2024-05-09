@@ -1,3 +1,107 @@
+:root {
+  --color-dark-100: rgb(65, 65, 65);
+  --color-dark-200: #31363f;
+  --color-dark-300: #222831;
+  --color-dark-400: #191919;
+  --color-dark-500: #4444446b;
+  --color-dark-600: rgba(136, 136, 216, 0.448);
+  --color-light-100: #e7eff7;
+  --color-light-200: #e7eff7e4;
+  --color-light-300: #2e32452e;
+  --color-light-400: #3c5b6f;
+  --color-light-500: #e7eff798;
+
+  /* Light Mode */
+  --bg--light: var(--color-light-200);
+  --txt--light: var(--color-dark-400);
+  --link-light: var(--color-dark-400);
+  --logo-light: var(--color-dark-400);
+  --qualifications-light: var(--color-light-300);
+  --qualifications-light-border: var(--color-light-400);
+  --border-light-color: var(--color-dark-100);
+  --shadow-light-color: var(--color-dark-400);
+  --line-light-color: var(--color-dark-400);
+  --svg-light-color: var(--color-dark-200);
+  --blogpost-border-light: var(--color-dark-100);
+
+  /* Dark Mode */
+  --bg--dark: var(--color-dark-400);
+  --txt--dark: var(--color-light-100);
+  --link-dark: var(--color-light-200);
+  --logo-dark: white;
+  --qualifications-dark: var(--color-dark-500);
+  --qualifications-dark-border: var(--color-dark-100);
+  --border-dark-color: var(--color-dark-400);
+  --shadow-dark-color: rgb(7, 7, 7);
+  --line-dark-color: var(--color-light-100);
+  --svg-dark-color: var(--color-light-100);
+  --blogpost-border-dark: var(--color-dark-600);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--bg--dark);
+    --txt: var(--txt--dark);
+    --logo: var(--logo-dark);
+    --link: var(--link-dark);
+    --qualifications: var(--qualifications-dark);
+    --qualifications-border: var(--qualifications-dark-border);
+    --border: var(--border-dark-color);
+    --shadow: var(--shadow-dark-color);
+    --line: var(--line-dark-color);
+    --svg: var(--svg-dark-color);
+    --blogpost: var(--blogpost-border-dark);
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: var(--bg--light);
+    --txt: var(--txt--light);
+    --logo: var(--logo-light);
+    --link: var(--link-light);
+    --qualifications: var(--qualifications-light);
+    --qualifications-border: var(--qualifications-light-border);
+    --border: var(--border-light-color);
+    --shadow: var(--shadow-light-color);
+    --line: var(--line-light-color);
+    --svg: var(--svg-light-color);
+    --blogpost: var(--blogpost-border-dark);
+    color-scheme: light;
+  }
+}
+
+[color-scheme="dark"] {
+  --bg: var(--bg--dark);
+  --txt: var(--txt--dark);
+  --logo: var(--logo-dark);
+  --link: var(--link-dark);
+  --qualifications: var(--qualifications-dark);
+  --qualifications-border: var(--qualifications-dark-border);
+  --border: var(--border-dark-color);
+  --shadow: var(--shadow-dark-color);
+  --line: var(--line-dark-color);
+  --svg: var(--svg-dark-color);
+  --blogpost: var(--blogpost-border-dark);
+  color-scheme: dark;
+}
+
+[color-scheme="light"] {
+  --bg: var(--bg--light);
+  --txt: var(--txt--light);
+  --logo: var(--logo-light);
+  --link: var(--link-light);
+  --qualifications: var(--qualifications-light);
+  --qualifications-border: var(--qualifications-light-border);
+  --border: var(--border-light-color);
+  --shadow: var(--shadow-light-color);
+  --line: red;
+  --svg: var(--svg-light-color);
+  --blogpost: var(--blogpost-border-dark);
+  color-scheme: light;
+}
+
 /*
   ====================================================
   #Resets: https://piccalil.li/blog/a-modern-css-reset
@@ -63,7 +167,12 @@ ul {
 
 a {
   text-decoration: none;
+  color: var(--link);
+ 
+
+  transition: all 0.5s ease-out;
 }
+
 
 .container {
   --max-width: 1000px;
@@ -73,11 +182,14 @@ a {
   margin-inline: auto;
   min-height: 100vh;
   position: relative;
+  overflow-anchor: none;
 }
 
 body {
   font-family: "Zen Kaku Gothic Antique", sans-serif;
   font-size: 19px;
+  background-color: var(--bg);
+  color: var(--txt);
 }
 
 h1,
@@ -103,4 +215,19 @@ button {
   padding: 0.4rem 0.7rem;
   border: 1px solid black;
   border-radius: 0.3rem;
+ 
+}
+
+.btn:hover {
+  background-color: var(--txt);
+  color: var(--bg);
+}
+
+svg {
+  stroke: var(--svg);
+  transition: all 0.5s ease-in-out;
+}
+
+svg[name="hover-svg"]:hover{
+  stroke: grey;
 }

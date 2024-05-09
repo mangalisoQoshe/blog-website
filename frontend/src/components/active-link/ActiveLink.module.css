@@ -1,4 +1,8 @@
 .link {
-  color: black;
   font-size: 1.5rem;
 }
+.link:hover {
+ 
+  color: gray;
+}
+

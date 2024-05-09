@@ -11,6 +11,7 @@ const MoonIcon = () => {
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
+      name="hover-svg"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
@@ -31,6 +32,7 @@ const SunIcon = () => {
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
+      name="hover-svg"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" />
@@ -59,6 +61,7 @@ const InstagramIcon = () => {
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
+      name="hover-svg"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
@@ -81,6 +84,7 @@ const LinkedinIcon = () => {
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
+      name="hover-svg"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
@@ -105,6 +109,7 @@ const AlertTriangle = () => {
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
+     
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 9v4" />
@@ -171,7 +176,7 @@ const CalenderIcon = () => {
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
-    >
+      name="calender"   >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
       <path d="M16 3v4" />
@@ -196,6 +201,7 @@ const TagIcon=()=>{
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
+      name="tag"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M7.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />

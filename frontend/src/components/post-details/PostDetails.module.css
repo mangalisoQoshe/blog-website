@@ -13,6 +13,9 @@
   border: none;
   background-color: transparent;
 }
+.btn-back:hover{
+  color: grey;
+}
 
 .title {
   margin-top: 1rem;
@@ -39,14 +42,15 @@
 .author-info {
   display: flex;
   flex-direction: column;
-  border-block: 1px solid black;
+  border-block: 2px solid var(--blogpost);
   padding-block: 5rem;
   text-align: center;
   margin-bottom: 5rem;
 }
 
 .p-picture {
-  border: 1px solid black;
+  border: 1px solid var(--border);
+  box-shadow: 2px 3px 8px var(--shadow);
   border-radius: 0.4rem;
   width: 300px;
   height: 240px;

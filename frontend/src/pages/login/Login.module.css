@@ -1,5 +1,6 @@
 .form-control{
    margin-inline: 10%;
+   margin-bottom: 1rem;
 }
 
 .form-control label {
@@ -12,16 +13,22 @@
   height: 40px;
   border-radius: 0.3rem;
   padding-left: 0.4rem;
+  
 }
 input:focus {
   outline: none;
-  box-shadow: 0 0 0 0.2em rgb(227, 219, 219);
+  box-shadow: 0 0 0 0.2em var(--shadow);
+}
+
+input::placeholder{
+  color: var(--text);
 }
 .btn-signout, .btn-submit{
   display: block;
   margin-inline: 10%;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
+
 
 @media (max-width: 518px) {
   .form-control input {

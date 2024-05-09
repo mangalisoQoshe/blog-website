@@ -1,5 +1,5 @@
 .blog-post {
-  border: 0.1rem solid rgb(191, 45, 45);
+  border: 0.1rem solid var(--blogpost);
   border-radius: 0.4rem;
   padding: 0.3rem;
   margin-bottom: 1rem;

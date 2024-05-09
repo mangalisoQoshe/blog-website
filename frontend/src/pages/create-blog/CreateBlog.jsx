@@ -119,7 +119,10 @@ function CreateBlog({ insertBlog }) {
             name="tag"
             onChange={handleChangeInput}
           />
-          <button className={styles["btn-tag"]} onClick={handleAddTagBtn}>
+          <button
+            className={`btn ${styles["btn-tag"]}`}
+            onClick={handleAddTagBtn}
+          >
             add
           </button>
           <ul>
@@ -140,7 +143,9 @@ function CreateBlog({ insertBlog }) {
         </div>
       </div>
       <div>{loadingEditorComponent}</div>
-      <button type="submit">Post</button>
+      <button className="btn" type="submit">
+        Post
+      </button>
     </form>
   );
 }
