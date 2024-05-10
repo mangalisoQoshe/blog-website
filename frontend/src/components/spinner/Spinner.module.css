@@ -10,7 +10,7 @@
   height: 120px;
   width: 120px;
   border: 6px solid;
-  border-color: black transparent black transparent;
+  border-color: var(--link) transparent var(--link) transparent;
   border-radius: 50%;
   animation: spin 1.3s ease infinite;
 }
@@ -20,12 +20,12 @@
     transform: rotate(360deg);
   }
 }
-@media (max-width: 400px) {
+@media (max-width: 1445px) {
   .spinner {
-    margin-block: 10rem;
+    margin-block: 8.8rem;
     border: 3px solid;
     border: 6px solid;
-    border-color: black transparent black transparent;
+    border-color: var(--link) transparent var(--link) transparent;
     border-radius: 50%;
     animation: spin 1.3s ease infinite;
   }

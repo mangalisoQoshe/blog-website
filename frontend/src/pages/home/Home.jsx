@@ -22,7 +22,7 @@ function Home() {
 
       <div className={styles["container-2"]}>
         <div className={styles.qualification}>
-          Hons. in Business Managemt Science
+          Hons. in Business Management Science
         </div>
 
         <div className={`${styles["profile-pic-containter"]}`}>

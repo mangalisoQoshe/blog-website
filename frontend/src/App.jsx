@@ -18,12 +18,41 @@ import EditBlog from "./pages/edit-blog/EditBlog";
 import useAuth from "./context/authContext/useAuth";
 import Notification from "./components/notification/Notification";
 import Footer from "./components/footer/Footer";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
   const { currentUser } = useAuth();
   const [errorMessage, setErrorMessage] = useState(null); //handles error message display for the blog component
   const [notify, setNotify] = useState({ message: "", level: "" });
+  const [storedColorScheme, setStoredColorScheme] =
+    useLocalStorage("colorScheme");
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (storedColorScheme) {
+      setIsDarkMode(storedColorScheme === "dark");
+      
+    } else {
+      // If no preference found, check prefers-color-scheme
+      const prefersDarkMode = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      setIsDarkMode(prefersDarkMode);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update color scheme preference in localStorage
+    setStoredColorScheme( isDarkMode ? "dark" : "light");
+    // Set the color-scheme attribute dynamically
+    document.documentElement.setAttribute(
+      "color-scheme",
+      isDarkMode ? "dark" : "light"
+    );
+  }, [isDarkMode]);
+
+  useEffect(() => {});
 
   useEffect(() => {
     blogService
@@ -92,7 +121,7 @@ function App() {
   return (
     <div className="container">
       <Router>
-        <Nav />
+        <Nav isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}/>
         <Notification notify={notify} />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -136,7 +165,7 @@ function App() {
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer/> 
+        <Footer />
       </Router>
     </div>
   );

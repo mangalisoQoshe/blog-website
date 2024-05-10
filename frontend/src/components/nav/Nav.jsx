@@ -1,6 +1,7 @@
 import styles from "./Nav.module.css";
 import { NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
 // Component imports
 import { MoonIcon, SunIcon } from "../icons/Icons";
@@ -8,35 +9,10 @@ import ActiveLink from "../active-link/ActiveLink";
 import useAuth from "../../context/authContext/useAuth";
 import HamburgerButton from "../hamburger/HamburgerButton";
 
-function Nav() {
+function Nav({setIsDarkMode,isDarkMode}) {
   const { currentUser } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
-useEffect(() => {
-  // Check if color scheme preference is saved in localStorage
-  const storedColorScheme = localStorage.getItem("colorScheme");
-  if (storedColorScheme) {
-    setIsDarkMode(storedColorScheme === "dark");
-  } else {
-    // If no preference found, check prefers-color-scheme
-    const prefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    setIsDarkMode(prefersDarkMode);
-  }
-}, []);
-
-
-  useEffect(() => {
-    // Update color scheme preference in localStorage
-    localStorage.setItem("colorScheme", isDarkMode ? "dark" : "light");
-    // Set the color-scheme attribute dynamically
-    document.documentElement.setAttribute(
-      "color-scheme",
-      isDarkMode ? "dark" : "light"
-    );
-  }, [isDarkMode]);
 
   const toggleMenu = () => {
     setIsOpen((open) => !open);
@@ -80,3 +56,8 @@ useEffect(() => {
 }
 
 export default Nav;
+
+Nav.propTypes={
+  isDarkMode:PropTypes.bool.isRequired,
+  setIsDarkMode:PropTypes.func.isRequired
+}
